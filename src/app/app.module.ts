@@ -3,12 +3,13 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { OwlModule } from 'ngx-owl-carousel';
-import { CarouselModule } from 'ngx-owl-carousel-o';
-import { CountdownModule } from "ng2-date-countdown";
+
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { OwlModule } from 'ngx-owl-carousel';
+import { CarouselModule } from 'ngx-owl-carousel-o';
+import { CountdownModule } from "ng2-date-countdown";
 //import { CookieService } from 'ngx-cookie-service';
 
 //  routing
@@ -30,12 +31,16 @@ import { LatestComponent } from './latest/latest.component';
 import { PartnerLogoComponent } from './partner-logo/partner-logo.component';
 import { LoginComponent } from './auth/login/login.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
-
-//services
-
+import { ShopComponent } from './layouts/shop/shop.component';
+import { ContactsUsComponent } from './layouts/contacts-us/contacts-us.component';
+import { ShoppingCartComponent } from './layouts/shopping-cart/shopping-cart.component';
+import { CheckOutComponent } from './layouts/check-out/check-out.component';
+import { FAQsComponent } from './layouts/faqs/faqs.component';
 
 //jquery
 import * as $ from 'jquery';
+
+
 
 
 
@@ -55,6 +60,12 @@ import * as $ from 'jquery';
     PartnerLogoComponent,
     LoginComponent,
     SignUpComponent,
+    ShopComponent,
+    ContactsUsComponent,
+    ShoppingCartComponent,
+    CheckOutComponent,
+    FAQsComponent,
+
 
   ],
   imports: [
@@ -70,7 +81,9 @@ import * as $ from 'jquery';
    HttpClientModule,
    CountdownModule
   ],
-  providers: [],
+  providers: [
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

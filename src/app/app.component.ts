@@ -22,6 +22,7 @@ export class AppComponent implements  AfterViewInit {
 
    ngOnInit() {
 
+
  }
 
   /*customOptions: OwlOptions  = {
