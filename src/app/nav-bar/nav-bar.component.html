@@ -5,25 +5,35 @@
       <div class="ht-left">
         <div class="mail-service">
           <a href="mailto:mohammed_samir336@yahoo.com" class="text-info">
-          <i class="fa fa-envelope"></i>
-          mohammed_samir336@yahoo.com
+            <i class="fa fa-envelope"></i>
+            mohammed_samir336@yahoo.com
           </a>
         </div>
         <div class="phone-service">
-          <a href="rel:01154838995"  class="text-info">
-          <i class=" fa fa-phone"></i>
-          +011 54.838.995
+          <a href="rel:01154838995" class="text-info">
+            <i class=" fa fa-phone"></i>
+            +011 54.838.995
           </a>
         </div>
       </div>
       <div class="ht-right">
-        <a [routerLink]="['/register' ]" href="#" class="login-panel"><i class="fa fa-user"></i>Register</a>
-        <a [routerLink]="['/login' ]" href="#" class="login-panel mr-3"><i class="fa fa-user"></i>Login</a>
+        <a [routerLink]="['/register' ]" [hidden]="loggedIn" href="#" class="login-panel"><i class="fa fa-user"></i>{{ 'HOME.register' | translate}}</a>
+        <a [routerLink]="['/login' ]" [hidden]="loggedIn" href="#" class="login-panel mr-3"><i class="fa fa-user"></i>{{ 'HOME.login' | translate}}</a>
+        <a  title="logout" href="#" [hidden]="!loggedIn"  (click)="logOut($event)" class="login-panel mr-3">{{ 'HOME.logout' | translate}}</a>
+        <a  [hidden]="!loggedIn"  class="login-panel mr-3">{{userName}}</a>
+
         <div class="lan-selector">
-          <select class="language_drop" name="countries" id="countries" style="width:300px;">
-            <option value='yt' data-image="assets/img/flag-1.jpg" data-imagecss="flag yt" data-title="English">English</option>
-            <option value='yu' data-image="assets/img/flag-2.jpg" data-imagecss="flag yu" data-title="Bangladesh">German </option>
+
+          <select #langselect (change)="translate.use(langselect.value)" name="countries" id="countries" style="width:91px;">
+            <!--   <option *ngFor="let lang of translate.getLangs()" data-image="assets/img/flag-1.jpg" [value]="lang" [selected]="lang === translate.currentLang" [title]="lang">{{lang}}</option>-->
+            <option value='en' data-image="assets/img/flag-1.jpg" data-imagecss="flag yt" data-title="English" [selected]="'en' === translate.currentLang" title="English">{{ 'HOME.English' | translate}}</option>
+            <option value='ar' data-image="assets/img/flag-2.jpg" data-imagecss="flag yu" data-title="Bangladesh" [selected]="'ar' === translate.currentLang" title="Arabic">{{ 'HOME.Arabic' | translate}}</option>
+            <option value='fr' data-image="assets/img/flag-2.jpg" data-imagecss="flag yu" data-title="Bangladesh" [selected]="'fr' === translate.currentLang" title="French">{{ 'HOME.French' | translate}}</option>
           </select>
+          <!--   <select #langselect (change)="translate.use(langselect.value)" name="countries" id="countries" style="width:99px;" >
+            <option value='en' data-image="assets/img/flag-1.jpg" data-imagecss="flag yt" data-title="English">English</option>
+            <option value='ar' data-image="assets/img/flag-2.jpg" data-imagecss="flag yu" data-title="Bangladesh">German </option>
+          </select>-->
         </div>
         <div class="top-social">
           <a href="#"><i class="ti-facebook"></i></a>
@@ -133,18 +143,20 @@
       </div>
       <nav class="nav-menu mobile-menu">
         <ul>
-          <li id="home" ><a [routerLink]="['/home']">Home</a></li>
-          <li id="shop" ><a [routerLink]="['/shop']" >Shop</a></li>
-          <li id="collection"><a >Collection</a>
+          <li id="home"><a [routerLink]="['/home']">{{ 'HOME.home' | translate}}</a></li>
+          <li id="shop"><a [routerLink]="['/shop']">{{ 'HOME.shop' | translate}}</a></li>
+          <li id="collection"><a>{{ 'HOME.collection' | translate}}</a>
             <ul class="dropdown">
               <li><a href="#">Men's</a></li>
               <li><a href="#">Women's</a></li>
               <li><a href="#">Kid's</a></li>
+              <li (click)="googleAr()"><a >googlr ar</a></li>
+              <li (click)="googleEn()"><a >google en</a></li>
             </ul>
           </li>
-          <li id="Cart" ><a [routerLink]="['/Shopping Cart']">Cart</a></li>
-          <li id="contact"><a [routerLink]="['/contact']">Contact</a></li>
-          <li><a>Pages</a>
+          <li id="Cart"><a [routerLink]="['/Shopping Cart']">{{ 'HOME.cart' | translate}}</a></li>
+          <li id="contact"><a [routerLink]="['/contact']">{{ 'HOME.contact' | translate}}</a></li>
+          <li><a>{{ 'HOME.pages' | translate}}</a>
             <ul class="dropdown">
               <li><a [routerLink]="['/Shopping Cart']">Shopping Cart</a></li>
               <li><a [routerLink]="['/checkout']">Checkout</a></li>

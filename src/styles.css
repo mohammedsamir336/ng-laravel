@@ -1,1 +1,24 @@
 /* You can add global styles to this file, and also import other style files */
+
+/*password password toggle*/
+@import url(https://fonts.googleapis.com/icon?family=Material+Icons);
+
+/* for empty forms*/
+.ng-invalid:not(form) {
+  border-left: 5px solid #a94442;
+  /* red */
+}
+
+.ng-valid:not(form) {
+  border-left: 5px solid green;
+  /*green */
+}
+
+/*for googel lang bar*/
+.goog-te-banner-frame.skiptranslate {
+  display: none !important;
+}
+
+body {
+  top: 0px !important;
+}

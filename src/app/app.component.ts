@@ -3,6 +3,9 @@ import { HomeSectionComponent } from './home-section/home-section.component';
 import { HttpClient} from '@angular/common/http';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { Observable } from 'rxjs/Observable';
+import { CallApiService } from "./services/call-api.service";
+import { TokenService } from './services/token.service';
+import { AuthService } from './services/auth.service';
 //import Html from "../src/view/includehtmlfile.html";
 import "jquery"
 declare var $: any;
@@ -14,10 +17,18 @@ declare var $: any;
 export class AppComponent implements  AfterViewInit {
   title = 'ng-L';
 
-  constructor() { }
+  constructor(
+    private call: CallApiService,
+    private token: TokenService,
+    public auth: AuthService
+  ) { }
+
+
 
    ngAfterViewInit(): void {
      //$('.owl-carousel').owlCarousel();
+     //this.elementName.owlCarousel();
+
   }
 
    ngOnInit() {
@@ -50,10 +61,10 @@ export class AppComponent implements  AfterViewInit {
     nav: true
   }*/
 
-  /*@ViewChild('selector') private elementName;
- ngAfterViewInit() {
+ //@ViewChild('selector') private elementName;
+ /*ngAfterViewInit() {
     //this is your dom
-    this.elementName.owlCarousel();
+
  }*/
 
 }

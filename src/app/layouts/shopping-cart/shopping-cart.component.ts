@@ -13,6 +13,8 @@ export class ShoppingCartComponent implements OnInit {
 
   ngOnInit(): void {
     this.Active.classList.add("active");
+
+    $.getScript("assets/js/main.js");//important link the script file
   }
 
   /*after leaves component do something

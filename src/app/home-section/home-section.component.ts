@@ -2,7 +2,9 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { OwlCarousel } from 'ngx-owl-carousel';
 import { Observable } from 'rxjs/Observable';
 import { ElementRef, Input, HostBinding, ChangeDetectionStrategy } from '@angular/core';
+import { CallApiService } from "../services/call-api.service";
 import { TokenService } from '../services/token.service';
+import { AuthService } from '../services/auth.service';
 import 'owl.carousel';
 declare var $: any;
 @Component({
@@ -12,7 +14,11 @@ declare var $: any;
 })
 export class HomeSectionComponent implements OnInit {
 
-  constructor(private token: TokenService) { this.token.gg();}
+  constructor(
+    private call: CallApiService,
+    private token: TokenService,
+    public auth: AuthService
+  ) { }
 
 
   html = '<div class="text-danger" id="nn">dfsdfsdfds</div>'
@@ -60,9 +66,7 @@ export class HomeSectionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.carousel();
-
     this.Active.classList.add("active");
 
   }

@@ -9,6 +9,9 @@ import { ContactsUsComponent } from './layouts/contacts-us/contacts-us.component
 import { ShoppingCartComponent } from './layouts/shopping-cart/shopping-cart.component';
 import { CheckOutComponent } from './layouts/check-out/check-out.component';
 import { FAQsComponent } from './layouts/faqs/faqs.component';
+import { ViewMoreComponent } from './layouts/view-more/view-more.component';
+import { ForgetPassComponent } from './auth/forget-pass/forget-pass.component';
+import { ResetPassComponent } from './auth/reset-pass/reset-pass.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -19,6 +22,9 @@ const routes: Routes = [
   { path: 'contact', component:  ContactsUsComponent, },
   { path: 'Shopping Cart', component:  ShoppingCartComponent, },
   { path: 'checkout', component:  CheckOutComponent, },
+  { path: 'view', component:   ViewMoreComponent, },
+  { path: 'forget password', component:  ForgetPassComponent, },
+  { path: 'restPass', component:   ResetPassComponent, },
   { path: 'FAQs', component:  FAQsComponent, },
   { path: '**', component: NotFoundComponent, },
 

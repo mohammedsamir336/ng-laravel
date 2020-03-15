@@ -1,0 +1,20 @@
+{
+  "HOME": {
+    "TITLE": "Bonjour Angular 2 avec ng2-translate !",
+    "TEXT": "محمد سمير",
+    "login":"s'identifier",
+    "logout":"s'identifier",
+   "register":"S'inscrire",
+   "home":"Accueil",
+   "shop":"Magasin",
+   "collection":"",
+   "cart":"Chariot",
+   "contact":"contacter",
+   "pages":"pages",
+   "English":"English",
+   "Arabic":"العربية",
+   "French":"française",
+    "SELECT": "Changer la langue"
+  }
+
+}

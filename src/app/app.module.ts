@@ -22,7 +22,6 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { FooterComponent } from './footer/footer.component';
 import { HomeSectionComponent } from './home-section/home-section.component';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { TestComponent } from './test/test.component';
 import { WomenBannerComponent } from './women-banner/women-banner.component';
 import { DealOfTheWeekComponent } from './deal-of-the-week/deal-of-the-week.component';
 import { ManBannerComponent } from './man-banner/man-banner.component';
@@ -36,13 +35,24 @@ import { ContactsUsComponent } from './layouts/contacts-us/contacts-us.component
 import { ShoppingCartComponent } from './layouts/shopping-cart/shopping-cart.component';
 import { CheckOutComponent } from './layouts/check-out/check-out.component';
 import { FAQsComponent } from './layouts/faqs/faqs.component';
+import { ViewMoreComponent } from './layouts/view-more/view-more.component';
+import { ScrollTopComponent } from './layouts/scroll-top/scroll-top.component';
+import { ForgetPassComponent } from './auth/forget-pass/forget-pass.component';
+import { ResetPassComponent } from './auth/reset-pass/reset-pass.component';
+
+//ngx-translate
+import {TranslateModule, TranslateLoader} from '@ngx-translate/core';//الترجمة
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';//الترجمة
 
 //jquery
 import * as $ from 'jquery';
 
 
 
-
+// AoT requires an exported function for factories
+export function HttpLoaderFactory(http: HttpClient) {
+    return new TranslateHttpLoader(http);
+}
 
 @NgModule({
   declarations: [
@@ -51,7 +61,6 @@ import * as $ from 'jquery';
     FooterComponent,
     HomeSectionComponent,
     NotFoundComponent,
-    TestComponent,
     WomenBannerComponent,
     DealOfTheWeekComponent,
     ManBannerComponent,
@@ -65,6 +74,10 @@ import * as $ from 'jquery';
     ShoppingCartComponent,
     CheckOutComponent,
     FAQsComponent,
+    ViewMoreComponent,
+    ScrollTopComponent,
+    ForgetPassComponent,
+    ResetPassComponent,
 
 
   ],
@@ -79,7 +92,14 @@ import * as $ from 'jquery';
    ReactiveFormsModule,
    RouterModule,
    HttpClientModule,
-   CountdownModule
+   CountdownModule,
+   TranslateModule.forRoot({//ترجمة
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient]
+            }
+        }),
   ],
   providers: [
 

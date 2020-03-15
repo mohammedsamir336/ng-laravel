@@ -1,0 +1,19 @@
+{
+  "HOME": {
+    "TITLE": "Hello Angular 2 with ngx-translate!",
+    "TEXT": "mohammed samir",
+    "login":"login",
+    "logout":"logout",
+   "register":"register",
+   "home":"Home",
+   "shop":"Shop",
+   "collection":"Collection",
+   "cart":"Cart",
+   "contact":"Contact",
+   "pages":"Pages",
+   "English":"English",
+   "Arabic":"العربية",
+   "French":"française",
+    "SELECT": "Change language"
+  }
+}
