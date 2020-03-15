@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AppRoutingModule } from '../../app-routing.module';
-import { Router, Routes, RouterModule, ActivatedRoute } from '@angular/router';
+import { Router, Routes, RouterModule, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';//Validatorsعشان
 import { AbstractControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -22,7 +22,9 @@ export class LoginComponent implements OnInit {
     private call: CallApiService,
     private token: TokenService,
     public auth: AuthService
-  ) { }
+  ) {
+
+  }
 
   public form = {
     email: null,
@@ -46,9 +48,9 @@ export class LoginComponent implements OnInit {
     this.auth.changeAuthStatus(true);// let auth services know that user has login
     //this.auth.setUserName(data.user);//send user name to auth service
     //this.auth.setUserEmail(data.email);
-    //console.log(data.user);
-    //this.myRouter.navigateByUrl('/home');
+    this.myRouter.navigateByUrl('/home');
     location.reload();
+    //this.ngOnInit();//reload page
   }
 
   /* send  form data to get user login
@@ -65,13 +67,23 @@ export class LoginComponent implements OnInit {
   checkTok() {
     let token = this.token.tokkenTrue();
     token ? this.myRouter.navigateByUrl('/home')
-          :console.log('No login');
+      : console.log('No login');
   }
 
   ngOnInit(): void {
     this.checkTok();
+    this.myRouter.routeReuseStrategy.shouldReuseRoute = function() {
+      return false;
+    };
+
   }
 
+  /*  reloadPage() {
+      Observable.interval(1000).subscribe(x => {
+      this.router.navigateByUrl('/RefreshComponent', {skipLocationChange: true}).then(()=>
+      this.router.navigate(["Your actualComponent"]));
+    });
+    }*/
   ngOnDestroy() {
   }
 

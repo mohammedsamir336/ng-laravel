@@ -8,10 +8,10 @@ export class AuthService {
 
   constructor( private token :TokenService,) { }
 
-  //السيرفيز دي معمولة عشان اقدر اغير حالة اليوز بعد تسجيل الخروج  واعرف الصفحات التانية انه سجل دخول او خروج
    Ehh : string;
    Nhh : string;
    hh : any;
+
   private loggedIn = new BehaviorSubject <boolean>(this.token.loggedIn());
 
   authStatus = this.loggedIn.asObservable();//ببعت الحالة بتاعته نيكست

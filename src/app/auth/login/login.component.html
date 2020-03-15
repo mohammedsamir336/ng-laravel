@@ -31,8 +31,12 @@
                         </div>
                         <div class="group-input">
                             <label for="password">Password *</label>
-                            <!-- Password -->
-                          <input type="password" id="password" name="password"  [ngClass]="{'is-invalid': error || !form.password }" class="form-control mb-4" placeholder="Password" [(ngModel)]="form.password" required>
+                              <!-- Password -->
+                            <show-hide-password size="sm" btnStyle="warning" [btnOutline]="true">
+                            <input type="password" id="password" name="password"  [ngClass]="{'is-invalid': error || !form.password }" class="form-control" placeholder="Password" [(ngModel)]="form.password" aria-describedby="defaultRegisterFormPasswordHelpBlock"
+                              matInput showHideInput required>
+                            </show-hide-password>
+
                         </div>
                         <div class="group-input gi-check">
                             <div class="gi-more">

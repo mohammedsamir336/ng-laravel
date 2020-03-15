@@ -44,6 +44,9 @@ import { ResetPassComponent } from './auth/reset-pass/reset-pass.component';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';//الترجمة
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';//الترجمة
 
+//npm
+import { ShowHidePasswordModule } from 'ngx-show-hide-password';//Show Hide Password
+
 //jquery
 import * as $ from 'jquery';
 
@@ -93,6 +96,7 @@ export function HttpLoaderFactory(http: HttpClient) {
    RouterModule,
    HttpClientModule,
    CountdownModule,
+   ShowHidePasswordModule,//Show Hide Password
    TranslateModule.forRoot({//ترجمة
             loader: {
                 provide: TranslateLoader,

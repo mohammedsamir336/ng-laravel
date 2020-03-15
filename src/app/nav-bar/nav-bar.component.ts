@@ -1,10 +1,12 @@
 import { Component, OnInit, AfterViewInit, Input, Output, } from '@angular/core';
-import { Router, Routes, RouterModule, ActivatedRoute } from '@angular/router';
+import { Router, Routes, RouterModule, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';//الترجمة
 import { AuthService } from '../services/auth.service';
 import { TokenService } from '../services/token.service';
 import { CallApiService } from "../services/call-api.service";
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-nav-bar',
@@ -46,8 +48,9 @@ export class NavBarComponent implements OnInit {
   }
 
   public loggedIn: boolean;// check auth
-
   userName: string;// get auth name
+  //userName: Observable<any>;
+  //testObservable:any;
 
   /*send token to call api services to get auth data
   */
@@ -78,6 +81,58 @@ export class NavBarComponent implements OnInit {
   */
   setUserD(data) {
     this.userName = data.name;
+    /*this.userName =  new Observable(observer => {
+        observer.next(data.name);
+
+   }).subscribe(
+         next => {
+             this.testObservable = next;//observableاطبع الداتا اللي جاية من
+         },
+
+       )*/
+  }
+
+
+
+  logOut(e) { //for logout
+    //e.preventDefault();
+    this.token.remove();
+    this.auth.changeAuthStatus(false);
+    this.myRouter.navigateByUrl('/login');
+    return false;
+  }
+
+
+  googleAr() {
+    document.cookie = "googtrans=/en/ar; path=/";
+    /*search get and check cookie*/
+  }
+
+  googleEn() {
+    document.cookie = "googtrans=/en/en; path=/";
+  }
+
+  /*when page component
+   */
+  ngOnInit(): void {
+
+    //this.url = location.pathname.replace('/', '');//part one of URL without slash
+    this.auth.authStatus.subscribe(value => this.loggedIn = value);
+    this.getUserFromApi();
+
+  }
+
+  /*when leave component
+  */
+  ngOnDestroy() {
+
+  }
+
+  /*after load component
+  */
+  ngAfterViewInit() {
+
+
   }
 
   intervalFun() {
@@ -110,35 +165,5 @@ export class NavBarComponent implements OnInit {
     //console.log(window.location.pathname);
     //  console.log(window.location.origin);//part tow afrter slah of URL
   }*/
-
-  logOut(e) { //for logout
-    //e.preventDefault();
-    this.token.remove();
-    this.auth.changeAuthStatus(false);
-    this.myRouter.navigateByUrl('/login');
-    return false;
-  }
-
-
-  googleAr() {
-    document.cookie = "googtrans=/en/ar; path=/";
-    /*search get and check cookie*/
-  }
-
-  googleEn() {
-    document.cookie = "googtrans=/en/en; path=/";
-  }
-
-
-
-  ngOnInit(): void {
-    //this.url = location.pathname.replace('/', '');//part one of URL without slash
-    this.auth.authStatus.subscribe(value => this.loggedIn = value);
-    this.getUserFromApi();
-  }
-
-  ngOnDestroy() {
-
-  }
 
 }
