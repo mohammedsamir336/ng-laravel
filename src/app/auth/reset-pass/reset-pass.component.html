@@ -1,46 +1,87 @@
 <!-- Breadcrumb Section Begin -->
 <div class="breacrumb-section">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="breadcrumb-text">
-                    <a [routerLink]="['/home']"><i class="fa fa-home"></i> Home</a>
-                    <span>Reset Password</span>
-                </div>
-            </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="breadcrumb-text">
+          <a [routerLink]="['/home']"><i class="fa fa-home"></i> Home</a>
+          <span>Change Password</span>
         </div>
+      </div>
     </div>
+  </div>
 </div>
 <!-- Breadcrumb Form Section Begin -->
 
 <!-- Register Section Begin -->
 <div class="register-login-section spad">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6 offset-lg-3">
-                <div class="register-form">
-                    <h2>Reset Password</h2>
-                    <form action="#">
-                        <div class="group-input">
-                            <label for="username">E-mail*</label>
-                            <input type="text" id="username">
-                        </div>
-                        <div class="group-input">
-                            <label for="pass">Password *</label>
-                            <input type="text" id="pass">
-                        </div>
-                        <div class="group-input">
-                            <label for="con-pass">Confirm Password *</label>
-                            <input type="text" id="con-pass">
-                        </div>
-                        <button type="submit" class="site-btn register-btn">Reset Password</button>
-                    </form>
-                    <div class="switch-login">
-                        <a [routerLink]="['/login']" class="or-login">Or Back To Login</a>
-                    </div>
-                </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 offset-lg-3">
+        <div class="register-form">
+          <h2>Change Password</h2>
+          <form (submit)="changePassword()" #changepassword=ngForm>
+            <div class="container">
+              <div class="row">
+
+                <span class="alert alert-danger text-center col-12" [hidden]="!messError">*{{messError}}</span>
+                <span class="alert alert-danger text-center col-12" [hidden]="errors.email && errors.password || !resendError">{{resendError}}</span>
+
+              </div>
             </div>
+
+
+            <div class="group-input">
+              <label for="email">E-mail*</label>
+              <input type="email" id="email" [ngClass]="{'is-invalid': errors.email}" [ngModelOptions]="{updateOn: 'blur'}" (blur)="emailInvalid()" name="email" class="form-control" placeholder="E-mail" [(ngModel)]="form.email" required>
+
+              <div class="css-0" [hidden]="resendError ||!errors.email">
+                <div class="css-2viodn">
+                  <div class="css-hzwjmo">
+                  </div>
+                  <div class="css-1j97nb6">
+                    {{errors.email}}
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="group-input">
+              <label for="password">Password *</label>
+
+              <show-hide-password size="sm" btnStyle="warning" [btnOutline]="true">
+                <input type="password" id="password" name="password" [ngClass]="{ 'is-invalid': errors.password || !form.password }" class="form-control" placeholder="Password" [(ngModel)]="form.password"
+                  aria-describedby="defaultRegisterFormPasswordHelpBlock" matInput showHideInput required>
+              </show-hide-password>
+
+              <div class="css-0" [hidden]="resendError||!errors.password">
+                <div class="css-2viodn">
+                  <div class="css-hzwjmo">
+                  </div>
+                  <div class="css-1j97nb6">
+                    {{errors.password}}
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="group-input">
+              <label for="con-pass">Confirm Password *</label>
+              <show-hide-password size="sm" btnStyle="warning" [btnOutline]="true">
+                <input type="password" id="password_confirmation" name="password_confirmation" [ngClass]="{ 'is-invalid': errors.password || !form.password_confirmation }" class="form-control" placeholder="Confirm Password"
+                  [(ngModel)]="form.password_confirmation" aria-describedby="defaultRegisterFormPhoneHelpBlock" matInput showHideInput required>
+              </show-hide-password>
+
+            </div>
+
+            <button type="submit" class="site-btn register-btn" [disabled]="!changepassword.valid">Reset Password</button>
+          </form>
+          <div class="switch-login">
+            <a [routerLink]="['/login']" class="or-login">Or Back To Login</a>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>
 <!-- Register Form Section End -->

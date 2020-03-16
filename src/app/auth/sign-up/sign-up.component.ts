@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { CallApiService } from "../../services/call-api.service";
 import { TokenService } from '../../services/token.service';
 import { Router, Routes, RouterModule, ActivatedRoute } from '@angular/router';
-//import { SnotifyService } from 'ng-snotify';
+import { SnotifyService } from 'ng-snotify';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -19,12 +19,12 @@ export class SignUpComponent implements OnInit {
   private token :TokenService,
   private myRouter: Router,
   public auth: AuthService,
-  //private notify: SnotifyService,
+  private notify: SnotifyService,
   ) { }
 
-  public form = { //عملت فورم اوبجيجت عشان هبعته لرالافيل لازم تعمله اوبجيكت
-    email: null,//اسم الانبوت وببعته عادي للسيرفيز
-    name: null,//اسم الانبوت وببعته عادي للسيرفيز
+  public form = {
+    email: null,
+    name: null,
     password: null,
     password_confirmation: null
   };
@@ -34,9 +34,11 @@ export class SignUpComponent implements OnInit {
     email: null,
     name: null,
     password: null
-  };//بحفظ فيه الاخطاء
+  };
 
-  emailValid(){// التحقق من الايميل بمجرد ما تشيل السهم من عليه حطط الفانشن في الانبوت بتاع الايميل في سينج اب
+  /*on blur
+  */
+  emailValid(){
       this.call.signUp(this.form).subscribe(
         data => this.dataUser(data),//بخزن الداتا اللي راحت عشان اعرضها تلقائي من غير تحميل الصفحة
         error => this.errors.email = error.error.errors.email
@@ -50,7 +52,7 @@ export class SignUpComponent implements OnInit {
 
     dataUser(data) {
       this.token.getData(data.access_token);//بحط الدتا اللي جاية في السيرفيز توكن اللي عملتها
-      //this.notify.success(`thank you for your register ${data.user}`);
+     this.notify.success(`thank you for your register ${data.user}`);
       this.auth.changeAuthStatus(true);// let auth services know that user has login
       this.redirectPages('/home');
       location.reload();
@@ -63,9 +65,6 @@ export class SignUpComponent implements OnInit {
 
     register(){
 
-      //مهم عملت سيرفيز اسمها كول اي بي اي وحطيت فيها كل الفانشانات
-
-      //مهم جدا هبتدي ابعت البيانات لللارافيل
       this.call.signUp(this.form).subscribe(
         data => this.dataUser(data),//بخزن الداتا اللي راحت عشان اعرضها تلقائي من غير تحميل الصفحة
         error => this.getErrorFromApisignUpLaravel(error) //[this.getErrorFromApisignUpLaravel(error),this.emailValid(error)]//ngIfبدي للفانشن دي الخطأ عشان احطه في المتغير  وابعته علي الصفحة من خلال

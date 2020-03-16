@@ -24,7 +24,7 @@ const routes: Routes = [
   { path: 'checkout', component:  CheckOutComponent, },
   { path: 'view', component:   ViewMoreComponent, },
   { path: 'forget password', component:  ForgetPassComponent, },
-  { path: 'restPass', component:   ResetPassComponent, },
+  { path: 'restPass/:token', component:   ResetPassComponent, },
   { path: 'FAQs', component:  FAQsComponent, },
   { path: '**', component: NotFoundComponent, },
 
