@@ -166,15 +166,37 @@
                 <a href="#" class="heart-icon"><i class="icon_heart_alt"></i></a>
               </div>
 
-                <ngb-rating [(rate)]="currentRate">
-                 <ng-template let-fill="fill" let-index="index">
-                   <span class="star" [class.filled]="fill === 100" [class.bad]="currentRate < 3" [class.good]="currentRate == 3 ">&#9733;</span>
-                 </ng-template>
-               </ngb-rating>
-               <b [hidden]="!currentRate">({{currentRate}})</b>
+              <!-- Avg rating-->
+              <i class="fa fa-user fa-7x mr-2" aria-hidden="true"></i>
+
+              <span>{{rateCount}}</span>
 
 
+              <ng-template #t let-fill="fill">
+                <span class="star2 " [class.full]="fill === 100">
+                  <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
+                </span>
+              </ng-template>
 
+              <ngb-rating [(rate)]="rateAvg" [starTemplate]="t" [readonly]="true" max="5" class="ml-2"></ngb-rating>
+              <span> ({{rateAvg}})</span>
+              <br>
+
+
+              <ngb-rating [(rate)]="currentRate" [readonly]="currentRate">
+                <ng-template let-fill="fill" let-index="index">
+                  <span class="star" [class.filled]="fill === 100" [class.bad]="currentRate < 3" [class.good]="currentRate == 3 " (click)="setRate(index+1)" [hidden]="currentRate">&#9733;</span>
+                </ng-template>
+              </ngb-rating>
+
+              <!-- for hold rating-->
+              <ngb-rating [(rate)]="currentRate" [readonly]="currentRate">
+                <ng-template let-fill="fill" let-index="index">
+                  <span class="star" [class.filled]="fill === 100" [class.bad]="currentRate < 3" [class.good]="currentRate == 3 " [hidden]="!currentRate">&#9733;</span>
+                </ng-template>
+              </ngb-rating>
+
+              <b [hidden]="!currentRate">({{currentRate}})</b>
 
               <div class="pd-desc">
                 <p>Lorem ipsum dolor sit amet, consectetur ing elit, sed do eiusmod tempor sum dolor

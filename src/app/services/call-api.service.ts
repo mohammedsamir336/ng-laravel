@@ -54,4 +54,18 @@ export class CallApiService {
 
   }
 
+  /*set rating into DB
+  */
+  setRating(data){
+    return this.http.post(`${this.url}/setRating`, data);
+
+  }
+
+  /*get rating into DB
+  */
+  getRating(data){
+    return this.http.post(`${this.url}/getRating`, data);
+
+  }
+
 }

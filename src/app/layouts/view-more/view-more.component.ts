@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
-import {NgbRatingConfig} from '@ng-bootstrap/ng-bootstrap';//Rating
+import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';//Rating
+import { FormControl, Validators } from '@angular/forms';
+import { CallApiService } from "../../services/call-api.service";
 declare var $: any;
 @Component({
   selector: 'app-view-more',
@@ -10,17 +12,56 @@ declare var $: any;
 export class ViewMoreComponent implements OnInit {
 
   constructor(
-      private location: Location,
-      private config: NgbRatingConfig,
+    private location: Location,
+    private config: NgbRatingConfig,
+    private call: CallApiService,
   ) {
     // customize default values of ratings used by this component tree
     config.max = 5;
-    //config.readonly = true; //hold Rating
-   }
+    //config.readonly = true //hold Rating
 
+  }
 
+  //ctrl = new FormControl(null, Validators.required);
   currentRate: number;
+  rateAvg : number;
+  rateCount :number;
 
+  public form = {
+    rate: null,
+    name: null,
+  };
+
+
+
+  /*setRate into DB
+  */
+  setRate(index) {
+    this.form.rate = index; //index number of star from html
+    this.call.setRating(this.form).subscribe(
+      data => console.log(data),
+      error => console.log(error)
+    );
+
+    this.getRate(); //for get new data from DB after rating
+  }
+
+  /*getRate into DB
+  */
+  getRate() {
+    this.call.getRating(this.form).subscribe(
+      data => this.ratingData(data),
+      error => console.log(error)
+    );
+  }
+
+  /*data from DB
+  */
+  ratingData(data){
+  this.currentRate = data.rate.rating;// visitor rating
+  this.rateAvg = data.rateAvg.toFixed(1); //toFixed to Select a number after Decimal point (,)
+  this.rateCount = data.rateCount;
+  }
 
   /*
   */
@@ -35,10 +76,10 @@ export class ViewMoreComponent implements OnInit {
         step: 100,
         animate: true,
         slide: function(event, ui) {
-        $("#minamount").val("$" + ui.values[0]/* + ",000"*/);
-        $("#maxamount").val("$" + ui.values[1] /*+ ",000"*/);
+          $("#minamount").val("$" + ui.values[0]/* + ",000"*/);
+          $("#maxamount").val("$" + ui.values[1] /*+ ",000"*/);
 
-      }
+        }
       })
         .slider("pips", {
           first: "pip",
@@ -48,6 +89,12 @@ export class ViewMoreComponent implements OnInit {
     });
   }
 
+
+  /*get name of products from url
+  */
+  getUrlName() {
+    this.form.name = location.pathname.split('/')[2].replace('%20', ' ');
+  }
 
 
   /*quantity(){
@@ -71,18 +118,23 @@ export class ViewMoreComponent implements OnInit {
     });
   }*/
 
-  changeUrl(){
+
+  /*change Url and remove %20
+  */
+  /*changeUrl(){
     let url = location.pathname.replace('%20', '');//decodeURI(location.pathname);
-  this.location.replaceState(url);//change url and remove %20
-  }
+    this.location.replaceState(url);//change url and remove %20
+    console.log(location.pathname.split('/')[2]);
+
+  }*/
 
   ngOnInit(): void {
-   this.filterPrice();
-   this.changeUrl();
+    this.filterPrice();
+    this.getUrlName();
+    this.getRate();
+    //this.changeUrl();
     //this.quantity();
-   $.getScript("assets/js/main.js");//import script link in component html
-
-
+    $.getScript("assets/js/main.js");//import script link in component html
   }
 
 
