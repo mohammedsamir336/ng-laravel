@@ -22,6 +22,7 @@ export class NavBarComponent implements OnInit {
     private auth: AuthService,
     private token: TokenService,
     private call: CallApiService,
+    private location: Location
   ) {
     translate.addLangs(['en', 'fr', 'ar']); //lang in select option
 
@@ -162,8 +163,8 @@ export class NavBarComponent implements OnInit {
   /*to add class acive to li of page For the page I'm on
   */
   /*active(url) {
-    //console.log(window.location.pathname);
-    //  console.log(window.location.origin);//part tow afrter slah of URL
+    //console.log(window.location.pathname);//part tow afrter slah of URL
+    //  console.log(window.location.origin);//part one afrter slah of URL
   }*/
 
 }

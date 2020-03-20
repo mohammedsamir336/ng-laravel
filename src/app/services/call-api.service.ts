@@ -47,4 +47,11 @@ export class CallApiService {
 
   }
 
+  /*for get Producer Sale from offers table
+  */
+  offersData(){
+    return this.http.get(`${this.url}/offers`);
+
+  }
+
 }

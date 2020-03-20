@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
+import {NgbRatingConfig} from '@ng-bootstrap/ng-bootstrap';//Rating
 declare var $: any;
 @Component({
   selector: 'app-view-more',
@@ -7,9 +9,22 @@ declare var $: any;
 })
 export class ViewMoreComponent implements OnInit {
 
-  constructor() { }
-  filterPrice() {
+  constructor(
+      private location: Location,
+      private config: NgbRatingConfig,
+  ) {
+    // customize default values of ratings used by this component tree
+    config.max = 5;
+    //config.readonly = true; //hold Rating
+   }
 
+
+  currentRate: number;
+
+
+  /*
+  */
+  filterPrice() {
     //filter Price
     $(document).ready(function() {
       $(".price-range").slider({
@@ -56,11 +71,17 @@ export class ViewMoreComponent implements OnInit {
     });
   }*/
 
+  changeUrl(){
+    let url = location.pathname.replace('%20', '');//decodeURI(location.pathname);
+  this.location.replaceState(url);//change url and remove %20
+  }
 
   ngOnInit(): void {
    this.filterPrice();
+   this.changeUrl();
     //this.quantity();
-   $.getScript("assets/js/main.js");//important link the script file
+   $.getScript("assets/js/main.js");//import script link in component html
+
 
   }
 

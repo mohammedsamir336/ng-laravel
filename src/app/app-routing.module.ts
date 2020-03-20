@@ -22,7 +22,7 @@ const routes: Routes = [
   { path: 'contact', component:  ContactsUsComponent, },
   { path: 'Shopping Cart', component:  ShoppingCartComponent, },
   { path: 'checkout', component:  CheckOutComponent, },
-  { path: 'view', component:   ViewMoreComponent, },
+  { path: 'view/:name', component:   ViewMoreComponent, },
   { path: 'forget password', component:  ForgetPassComponent, },
   { path: 'restPass/:token', component:   ResetPassComponent, },
   { path: 'FAQs', component:  FAQsComponent, },

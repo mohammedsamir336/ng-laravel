@@ -6,27 +6,28 @@
   <div class="item"><img src="assets/fullimage3.jpg" alt="Mirror Edge"></div>
 
 </div>-->
+
 <!-- Hero Section Begin -->
 <section class="hero-section">
-  <div class="hero-items owl-carousel">
-    <div class="single-hero-items set-bg" style="background-image: url('assets/img/hero-1.jpg'); ">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-5">
-            <span>Bag,kids</span>
-            <h1>Black friday</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-              incididunt ut labore et dolore</p>
-            <a href="#" class="primary-btn">Shop Now</a>
+  <div class="hero-items owl-carousel documentation" >
+     <div  *ngFor="let offers of dataOffers">
+      <div class="single-hero-items set-bg" [ngStyle]="{'background-image':'url(' + 'assets/img/' + offers.img  + ')'}">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-5">
+              <span>{{offers.tag}}</span>
+              <h1>{{offers.title}}</h1>
+              <p>{{offers.p}}</p>
+              <a [routerLink]="['/view', offers.name]" class="primary-btn">Shop Now</a>
+            </div>
+          </div>
+          <div class="off-card">
+            <h2>Sale <span>{{offers.sale}}%</span></h2>
           </div>
         </div>
-        <div class="off-card">
-          <h2>Sale <span>50%</span></h2>
-        </div>
       </div>
-    </div>
-
-    <div class="single-hero-items set-bg" style="background-image: url('assets/img/hero-2.jpg');  ">
+      </div>
+    <!--  <div class="single-hero-items set-bg" style="background-image: url('assets/img/hero-2.jpg');  ">
       <div class="container">
         <div class="row">
           <div class="col-lg-5">
@@ -40,9 +41,11 @@
           <h2>Sale <span>50%</span></h2>
         </div>
       </div>
-    </div>
+    </div>-->
 
   </div>
+
+
 </section>
 <!-- Hero Section End -->
 

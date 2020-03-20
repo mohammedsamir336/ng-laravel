@@ -48,7 +48,7 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';//الترجمة
 import { ShowHidePasswordModule } from 'ngx-show-hide-password';//Show Hide Password
 import { SnotifyModule, SnotifyService, ToastDefaults } from 'ng-snotify';
 import { NgxPayPalModule } from 'ngx-paypal';//paypal
-
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';//ng-bootstrap
 
 //jquery
 import * as $ from 'jquery';
@@ -93,6 +93,7 @@ export function HttpLoaderFactory(http: HttpClient) {
    CarouselModule,
    BrowserAnimationsModule,
    OwlModule,
+   NgbModule,//ng-bootstrap
    NoopAnimationsModule,
    FormsModule,
    NgxPayPalModule,//paypal

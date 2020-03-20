@@ -1,0 +1,18 @@
+/*rating*/
+.star {
+      font-size: 3rem;
+      color: #b0c4de;
+    }
+    .filled {
+      color:  #FFDF00;
+    }
+
+    .filled.good {
+      color: #FDCC0D;
+    }
+    .filled.bad {
+      color: red;
+    }
+    .d-inline-flex{
+      border-style: none;
+     }
