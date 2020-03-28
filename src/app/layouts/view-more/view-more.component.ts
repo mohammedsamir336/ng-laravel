@@ -3,7 +3,10 @@ import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
 import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';//Rating
 import { FormControl, Validators } from '@angular/forms';
 import { CallApiService } from "../../services/call-api.service";
+import { Router, Routes, RouterModule, ActivatedRoute, NavigationEnd } from '@angular/router';
+
 declare var $: any;
+
 @Component({
   selector: 'app-view-more',
   templateUrl: './view-more.component.html',
@@ -15,6 +18,7 @@ export class ViewMoreComponent implements OnInit {
     private location: Location,
     private config: NgbRatingConfig,
     private call: CallApiService,
+    private myRouter: Router,
   ) {
     // customize default values of ratings used by this component tree
     config.max = 5;
@@ -26,6 +30,7 @@ export class ViewMoreComponent implements OnInit {
   currentRate: number;
   rateAvg : number;
   rateCount :number;
+  product ={};
 
   public form = {
     rate: null,
@@ -122,16 +127,43 @@ export class ViewMoreComponent implements OnInit {
   /*change Url and remove %20
   */
   /*changeUrl(){
-    let url = location.pathname.replace('%20', '');//decodeURI(location.pathname);
+    let url = location.pathname.replace('%20', '_');//decodeURI(location.pathname);
     this.location.replaceState(url);//change url and remove %20
-    console.log(location.pathname.split('/')[2]);
+    //console.log(location.pathname.split('/')[2]);
 
   }*/
+
+
+  /*product data from api
+  */
+  productData(data)
+  {
+    this.product = data;
+    this.product ?? this.notFound();//if data not fount get error (404)
+    console.log(this.product.data.name)
+  }
+
+  /*if product error
+  */
+  notFound()
+  {
+    this.myRouter.navigateByUrl('not_found');
+  }
+  /*get products data
+  */
+  getProduct() {
+    this.call.viewMore(this.form).subscribe(
+      data  => this.productData(data),
+      error => this.notFound()
+    );
+  }
+
 
   ngOnInit(): void {
     this.filterPrice();
     this.getUrlName();
     this.getRate();
+    this.getProduct();
     //this.changeUrl();
     //this.quantity();
     $.getScript("assets/js/main.js");//import script link in component html

@@ -68,4 +68,12 @@ export class CallApiService {
 
   }
 
+  /*get rating into DB
+  */
+  viewMore(data){
+    return this.http.post(`${this.url}/viewMore`, data);
+
+  }
+
+
 }
