@@ -28,9 +28,12 @@ export class ViewMoreComponent implements OnInit {
 
   //ctrl = new FormControl(null, Validators.required);
   currentRate: number;
-  rateAvg : number;
-  rateCount :number;
-  product ={};
+  rateAvg: number;
+  rateCount: number;
+  trim: string;
+  product = {};
+  color = [];
+  size = [];
 
   public form = {
     rate: null,
@@ -62,15 +65,15 @@ export class ViewMoreComponent implements OnInit {
 
   /*data from DB
   */
-  ratingData(data){
-  this.currentRate = data.rate.rating;// visitor rating
-  this.rateAvg = data.rateAvg.toFixed(1); //toFixed to Select a number after Decimal point (,)
-  this.rateCount = data.rateCount;
+  ratingData(data) {
+    this.currentRate = data.rate.rating;// visitor rating
+    this.rateAvg = data.rateAvg.toFixed(1); //toFixed to Select a number after Decimal point (,)
+    this.rateCount = data.rateCount;
   }
 
   /*
   */
-  filterPrice() {
+  /*filterPrice() {
     //filter Price
     $(document).ready(function() {
       $(".price-range").slider({
@@ -81,18 +84,18 @@ export class ViewMoreComponent implements OnInit {
         step: 100,
         animate: true,
         slide: function(event, ui) {
-          $("#minamount").val("$" + ui.values[0]/* + ",000"*/);
-          $("#maxamount").val("$" + ui.values[1] /*+ ",000"*/);
+          $("#minamount").val("$" + ui.values[0]/* + ",000"*///);
+        //  $("#maxamount").val("$" + ui.values[1] /*+ ",000"*/);
 
-        }
-      })
-        .slider("pips", {
-          first: "pip",
+      //  }
+    //  })
+  /*    .slider("pips", {
+         first: "pip",
           last: "pip",
           suffix: "k"
         });
     });
-  }
+  }*/
 
 
   /*get name of products from url
@@ -133,34 +136,51 @@ export class ViewMoreComponent implements OnInit {
 
   }*/
 
+  /*to get only 30 words of product introduction
+  */
+  getWords(str) {
+    return str.split(/\s+/).slice(0, 30).join(" ");
+  }
+
+
+
+  /*split data and push into array
+  */
+  splitData(data) {
+    let res = data.color.split(",").join(" ");// get color without (,)
+    this.color = res.split(' ');//push color into array
+    let si = data.size.split(",").join(" ");// get size without (,)
+    this.size = si.split(' ');//push size into array
+  }
+
 
   /*product data from api
   */
-  productData(data)
-  {
+  productData(data) {
     this.product = data;
     this.product ?? this.notFound();//if data not fount get error (404)
-    console.log(this.product.data.name)
+    this.trim = this.getWords(data.introduction);
+    this.splitData(data);
+
   }
 
   /*if product error
   */
-  notFound()
-  {
+  notFound() {
     this.myRouter.navigateByUrl('not_found');
   }
   /*get products data
   */
   getProduct() {
     this.call.viewMore(this.form).subscribe(
-      data  => this.productData(data),
+      data => this.productData(data),
       error => this.notFound()
     );
   }
 
 
   ngOnInit(): void {
-    this.filterPrice();
+    //this.filterPrice();
     this.getUrlName();
     this.getRate();
     this.getProduct();

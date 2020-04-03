@@ -68,12 +68,18 @@ export class CallApiService {
 
   }
 
-  /*get rating into DB
+  /*get one product for view more
   */
   viewMore(data){
     return this.http.post(`${this.url}/viewMore`, data);
 
   }
 
+  /*get all products data
+  */
+  shop(data){
+    return this.http.post(`${this.url}/allShop`, data);
+
+  }
 
 }
