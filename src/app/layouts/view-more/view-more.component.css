@@ -42,3 +42,11 @@
 	display: inline-block;
 	margin-right: 10px;
 }
+
+/*ul li:before
+{content:'\2713';
+  display:inline-block;
+  color:red;
+  padding:0 6px 0 0;
+  }*/
+ul li{list-style-type:none;font-size:1em;}

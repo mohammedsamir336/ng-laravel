@@ -82,4 +82,11 @@ export class CallApiService {
 
   }
 
+  /*set product in cart DB
+  */
+  setCart(data){
+    return this.http.post(`${this.url}/setCart`, data);
+
+  }
+
 }

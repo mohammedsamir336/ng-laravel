@@ -2258,7 +2258,20 @@ ol {
 	visibility: hidden;
 }
 
-.product-details .pd-size-choose .sc-item label {
+.selectSize{
+	font-size: 16px;
+	/*color: yellow;*/
+	background-color: yellow;
+	font-weight: 700;
+	height: 40px;
+	width: 47px;
+	border: 1px solid yellow;
+	text-align: center;
+	line-height: 40px;
+	text-transform: uppercase;
+	cursor: pointer;
+}
+.product-details .pd-size-choose .sc-item .size {
 	font-size: 16px;
 	color: #252525;
 	font-weight: 700;

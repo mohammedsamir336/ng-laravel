@@ -96,9 +96,17 @@
                 <div class="pd-color-choose" *ngFor="let col of color">
                   <div class="filter-widget">
                     <div class="fw-color-choose">
-                      <div class="cs-item cm-item">
-                        <input type="radio" id="cs-{{col}}" value="{{col}}">
-                        <label class="cs-{{col}} m" for="cs-{{col}}"></label>
+                      <div class="cm-item">
+                        <ul>
+                          <li><input type="checkbox" id="cs-{{col}}" value="{{col}}" (change)="colorSelect($event)"></li>
+                          <div class="cs-item cm-item">
+
+                        <li><label class="cs-{{col}} m" for="cs-{{col}}"></label></li>
+                          </div>
+                        </ul>
+
+                        <!-- <input type="checkbox" id="cs-{{col}}" value="{{col}}" (change)="ccc($event)">
+                        <label class="cs-{{col}} m" for="cs-{{col}}"></label>-->
                       </div>
                     </div>
                   </div>
@@ -106,8 +114,8 @@
               </div>
               <div class="pd-size-choose">
                 <div class="sc-item" *ngFor="let si of size">
-                  <input type="radio" id="{{si}}-size" value="{{si}}">
-                  <label for="{{si}}-size">{{si}}</label>
+                  <input type="checkbox" id="{{si}}-size" value="{{si}}" (change)="sizeSelect($event)">
+                  <label for="{{si}}-size" id="{{si}}-label" class="size">{{si}}</label>
                 </div>
 
               </div>
@@ -115,7 +123,8 @@
                 <div class="pro-qty">
                   <input type="text" value="1">
                 </div>
-                <a [routerLink]="['/Shopping Cart']" class="primary-btn pd-cart">Add To Cart</a>
+                <a [routerLink]="" (click)="putIntoCart(product.name)" class="primary-btn pd-cart">Add To Cart</a>
+                <a [routerLink]="" class="primary-btn pd-cart">has add in cart</a>
               </div>
               <ul class="pd-tags">
                 <li><span>CATEGORIES</span>: {{product.cat}}</li>

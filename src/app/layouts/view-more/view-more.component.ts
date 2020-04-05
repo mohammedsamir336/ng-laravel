@@ -21,7 +21,7 @@ export class ViewMoreComponent implements OnInit {
     private myRouter: Router,
   ) {
     // customize default values of ratings used by this component tree
-    config.max = 5;
+    config.max = 5; //number of rating stars
     //config.readonly = true //hold Rating
 
   }
@@ -35,13 +35,56 @@ export class ViewMoreComponent implements OnInit {
   color = [];
   size = [];
 
+  //post rhe product to DB cart table api
+  selectColor = [];
+  selectSize  = [];
+
   public form = {
     rate: null,
     name: null,
   };
 
+  public cartForm = {
+    price: null,
+    color: null,
+    size: null,
+    number: null,
+  };
 
 
+  colorSelect(event){
+  let val = event.target.value;
+    if (event.target.checked) {
+      this.selectColor.push(val);
+    }else{
+      const index = this.selectColor.findIndex(e => e == val);
+        if (index > -1) {
+          this.selectColor.splice(index, 1);
+
+        }
+
+    }
+
+  }
+
+  sizeSelect(event){
+  let val = event.target.value;
+  let sizeLabel = document.querySelector('#'+val+'-label');
+    if (event.target.checked) {
+      this.selectSize.push(val);
+
+      sizeLabel.classList.remove("size")
+      sizeLabel.classList.add("selectSize");
+    }else{
+      const index = this.selectSize.findIndex(e => e == val);
+        if (index > -1) {
+          this.selectSize.splice(index, 1);
+          sizeLabel.classList.remove("selectSize");
+          sizeLabel.classList.add("size");
+        }
+
+    }
+  }
   /*setRate into DB
   */
   setRate(index) {
@@ -104,6 +147,18 @@ export class ViewMoreComponent implements OnInit {
     this.form.name = location.pathname.split('/')[2].replace('%20', ' ');
   }
 
+  /*set product in cart DB
+  */
+  putIntoCart(data){
+    this.cartForm.color = this.selectColor.toString();
+    this.cartForm.size = this.selectSize.toString();
+    console.log( this.cartForm.size);
+      console.log(this.cartForm.color);
+    /*this.call.setCart(this.cartForm).subscribe(
+      data => console.log(data),
+      error => console.log(error)
+    );*/
+  }
 
   /*quantity(){
     var proQty = $('.pro-qty');

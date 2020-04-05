@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-
+import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
+import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';//Rating
+import { CallApiService } from "../../services/call-api.service";
+import { Router, Routes, RouterModule, ActivatedRoute, NavigationEnd } from '@angular/router';
+declare var $: any;
 @Component({
   selector: 'app-shopping-cart',
   templateUrl: './shopping-cart.component.html',
@@ -7,7 +11,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ShoppingCartComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private location: Location,
+    private config: NgbRatingConfig,
+    private call: CallApiService,
+    private myRouter: Router,
+  )
+  {}
 
   Active = document.querySelector('#Cart');
 

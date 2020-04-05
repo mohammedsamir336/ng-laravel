@@ -32,14 +32,14 @@
             <div class="bc-item">
               <label for="bc-calvin">
                 Calvin Klein
-                <input type="checkbox" id="bc-calvin">
+                <input type="checkbox" id="bc-calvin" (change)="color($event,'brand')"  name="Calvin Klein">
                 <span class="checkmark"></span>
               </label>
             </div>
             <div class="bc-item">
               <label for="bc-diesel">
                 Diesel
-                <input type="checkbox" id="bc-diesel">
+                <input type="checkbox" id="bc-diesel" >
                 <span class="checkmark"></span>
               </label>
             </div>
@@ -80,7 +80,7 @@
           <h4 class="fw-title">Color</h4>
           <div class="fw-color-choose">
             <div class="cs-item">
-              <input type="checkbox" id="cs-black" (change)="color($event)" name="black">
+              <input type="checkbox" id="cs-black" (change)="color($event,'color')" name="black">
               <label class="cs-black" for="cs-black">Black</label>
             </div>
             <div class="cs-item">
