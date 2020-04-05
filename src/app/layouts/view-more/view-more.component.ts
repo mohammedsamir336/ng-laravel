@@ -29,6 +29,7 @@ export class ViewMoreComponent implements OnInit {
   //ctrl = new FormControl(null, Validators.required);
   currentRate: number;
   rateAvg: number;
+  price: number;
   rateCount: number;
   trim: string;
   product = {};
@@ -37,51 +38,56 @@ export class ViewMoreComponent implements OnInit {
 
   //post rhe product to DB cart table api
   selectColor = [];
-  selectSize  = [];
-
-  public form = {
-    rate: null,
-    name: null,
-  };
+  selectSize = [];
+  cartStatus: boolean;
 
   public cartForm = {
     price: null,
     color: null,
     size: null,
     number: null,
+    user: null,
   };
 
-
-  colorSelect(event){
-  let val = event.target.value;
+  public form = {
+    rate: null,
+    name: null,
+  };
+  /*when select color
+  */
+  colorSelect(event) {
+    let val = event.target.value;
+    //id checked
     if (event.target.checked) {
       this.selectColor.push(val);
-    }else{
-      const index = this.selectColor.findIndex(e => e == val);
-        if (index > -1) {
-          this.selectColor.splice(index, 1);
+    } else {
+      const index = this.selectColor.findIndex(e => e == val); //remove from array
+      if (index > -1) {
+        this.selectColor.splice(index, 1);
 
-        }
+      }
 
     }
 
   }
 
-  sizeSelect(event){
-  let val = event.target.value;
-  let sizeLabel = document.querySelector('#'+val+'-label');
+  /*when select size
+  */
+  sizeSelect(event) {
+    let val = event.target.value;
+    let sizeLabel = document.querySelector('#' + val + '-label'); // size checkbox label
     if (event.target.checked) {
       this.selectSize.push(val);
 
-      sizeLabel.classList.remove("size")
-      sizeLabel.classList.add("selectSize");
-    }else{
+      sizeLabel.classList.remove("size");
+      sizeLabel.classList.add("selectSize");// this class to know what size id selector
+    } else {
       const index = this.selectSize.findIndex(e => e == val);
-        if (index > -1) {
-          this.selectSize.splice(index, 1);
-          sizeLabel.classList.remove("selectSize");
-          sizeLabel.classList.add("size");
-        }
+      if (index > -1) {
+        this.selectSize.splice(index, 1);
+        sizeLabel.classList.remove("selectSize");
+        sizeLabel.classList.add("size");
+      }
 
     }
   }
@@ -128,10 +134,10 @@ export class ViewMoreComponent implements OnInit {
         animate: true,
         slide: function(event, ui) {
           $("#minamount").val("$" + ui.values[0]/* + ",000"*///);
-        //  $("#maxamount").val("$" + ui.values[1] /*+ ",000"*/);
+  //  $("#maxamount").val("$" + ui.values[1] /*+ ",000"*/);
 
-      //  }
-    //  })
+  //  }
+  //  })
   /*    .slider("pips", {
          first: "pip",
           last: "pip",
@@ -147,24 +153,15 @@ export class ViewMoreComponent implements OnInit {
     this.form.name = location.pathname.split('/')[2].replace('%20', ' ');
   }
 
-  /*set product in cart DB
-  */
-  putIntoCart(data){
-    this.cartForm.color = this.selectColor.toString();
-    this.cartForm.size = this.selectSize.toString();
-    console.log( this.cartForm.size);
-      console.log(this.cartForm.color);
-    /*this.call.setCart(this.cartForm).subscribe(
-      data => console.log(data),
-      error => console.log(error)
-    );*/
-  }
 
-  /*quantity(){
+  quantity() {
+    /*-------------------
+     Quantity change
+   --------------------- */
     var proQty = $('.pro-qty');
     proQty.prepend('<span class="dec qtybtn">-</span>');
     proQty.append('<span class="inc qtybtn">+</span>');
-    proQty.on('click', '.qtybtn', function () {
+    proQty.on('click', '.qtybtn', function() {
       var $button = $(this);
       var oldValue = $button.parent().find('input').val();
       if ($button.hasClass('inc')) {
@@ -178,9 +175,29 @@ export class ViewMoreComponent implements OnInit {
         }
       }
       $button.parent().find('input').val(newVal);
-    });
-  }*/
 
+    });
+
+  }
+
+  /*set product in cart DB
+  */
+  putIntoCart(data) {
+    let input = $('.pro-qty').parent().find('input').val(); // input of Quantity
+    this.cartForm.color = this.selectColor.toString();
+    this.cartForm.size = this.selectSize.toString();
+    this.cartForm.number = input;
+    this.cartForm.price = input * this.price;
+    console.log(this.cartForm.size);
+    console.log(this.cartForm.color);
+    console.log( this.cartForm.price);
+    //متنساش ان لو العميل مسجل دخول هتحط التوكن
+    //ولو مش مسجل هتحط ip
+    /*this.call.setCart(this.cartForm).subscribe(
+      data => console.log(data),
+      error => console.log(error)
+    );*/
+  }
 
   /*change Url and remove %20
   */
@@ -213,6 +230,7 @@ export class ViewMoreComponent implements OnInit {
   */
   productData(data) {
     this.product = data;
+    this.price = data.new_price;
     this.product ?? this.notFound();//if data not fount get error (404)
     this.trim = this.getWords(data.introduction);
     this.splitData(data);
@@ -239,8 +257,9 @@ export class ViewMoreComponent implements OnInit {
     this.getUrlName();
     this.getRate();
     this.getProduct();
+
     //this.changeUrl();
-    //this.quantity();
+    this.quantity();
     $.getScript("assets/js/main.js");//import script link in component html
   }
 
