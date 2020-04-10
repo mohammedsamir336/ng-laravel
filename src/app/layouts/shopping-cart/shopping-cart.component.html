@@ -31,22 +31,22 @@
                                 <th><i class="ti-close"></i></th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td class="cart-pic first-row"><img src="assets/img/cart-page/product-1.jpg" alt=""></td>
+                        <tbody >
+                            <tr *ngFor="let cart of cartData" [hidden]="!cartData.length">
+                                <td class="cart-pic first-row"><img src="assets/img/cart-page/{{cart.img}}" alt=""></td>
                                 <td class="cart-title first-row">
-                                    <h5>Pure Pineapple</h5>
+                                    <h5>{{cart.name}}</h5>
                                 </td>
-                                <td class="p-price first-row">$60.00</td>
+                                <td class="p-price first-row">${{cart.price / cart.number}}</td>
                                 <td class="qua-col first-row">
                                     <div class="quantity">
-                                        <div class="pro-qty">
-                                            <input type="text" value="1">
-                                        </div>
+
+                                          {{cart.number}}
+
                                     </div>
                                 </td>
-                                <td class="total-price first-row">$60.00</td>
-                                <td class="close-td first-row"><i class="ti-close"></i></td>
+                                <td class="total-price first-row">${{cart.price}}</td>
+                                <td class="close-td first-row"><i class="ti-close" (click)="delCart(cart._id)"></i></td>
                             </tr>
                             <tr>
                                 <td class="cart-pic"><img src="assets/img/cart-page/product-2.jpg" alt=""></td>
@@ -82,6 +82,9 @@
                             </tr>
                         </tbody>
                     </table>
+                    <div class="container text-center ml-5" [hidden]="cartData.length">
+                      <h2 class="text-info ">Your Cart Is Empty....</h2>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-4">

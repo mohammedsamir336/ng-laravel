@@ -88,5 +88,19 @@ export class CallApiService {
     return this.http.post(`${this.url}/setCart`, data);
 
   }
+  /*get product in cart DB
+  */
+  getCart(data){
+    return this.http.post(`${this.url}/getCart`, data);
+
+  }
+
+  /*delete product in cart DB
+  */
+  deleteCart(data){
+    return this.http.post(`${this.url}/deleteCart`, data);
+
+  }
+
 
 }

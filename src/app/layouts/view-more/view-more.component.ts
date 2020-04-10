@@ -4,7 +4,9 @@ import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';//Rating
 import { FormControl, Validators } from '@angular/forms';
 import { CallApiService } from "../../services/call-api.service";
 import { Router, Routes, RouterModule, ActivatedRoute, NavigationEnd } from '@angular/router';
-
+import { AuthService } from '../../services/auth.service';
+import { TokenService } from '../../services/token.service';
+import { SnotifyService } from 'ng-snotify';
 declare var $: any;
 
 @Component({
@@ -19,12 +21,17 @@ export class ViewMoreComponent implements OnInit {
     private config: NgbRatingConfig,
     private call: CallApiService,
     private myRouter: Router,
+    private auth: AuthService,
+    private notify: SnotifyService,
+    private token: TokenService,
   ) {
     // customize default values of ratings used by this component tree
     config.max = 5; //number of rating stars
     //config.readonly = true //hold Rating
 
   }
+
+  public loggedIn: boolean;// check auth
 
   //ctrl = new FormControl(null, Validators.required);
   currentRate: number;
@@ -42,11 +49,14 @@ export class ViewMoreComponent implements OnInit {
   cartStatus: boolean;
 
   public cartForm = {
+    name: null,
+    item: null,
     price: null,
     color: null,
     size: null,
     number: null,
     user: null,
+    img: null,
   };
 
   public form = {
@@ -164,14 +174,14 @@ export class ViewMoreComponent implements OnInit {
     proQty.on('click', '.qtybtn', function() {
       var $button = $(this);
       var oldValue = $button.parent().find('input').val();
-      if ($button.hasClass('inc')) {
+      if ($button.hasClass('inc') ) {
         var newVal = parseFloat(oldValue) + 1;
       } else {
         // Don't allow decrementing below zero
-        if (oldValue > 0) {
+        if (oldValue > 1  ) {
           var newVal = parseFloat(oldValue) - 1;
         } else {
-          newVal = 0;
+          newVal = 1;
         }
       }
       $button.parent().find('input').val(newVal);
@@ -188,15 +198,36 @@ export class ViewMoreComponent implements OnInit {
     this.cartForm.size = this.selectSize.toString();
     this.cartForm.number = input;
     this.cartForm.price = input * this.price;
-    console.log(this.cartForm.size);
-    console.log(this.cartForm.color);
-    console.log( this.cartForm.price);
-    //متنساش ان لو العميل مسجل دخول هتحط التوكن
-    //ولو مش مسجل هتحط ip
-    /*this.call.setCart(this.cartForm).subscribe(
-      data => console.log(data),
-      error => console.log(error)
-    );*/
+    this.loggedIn ? this.authSetCart()
+                  : this.guestSetCart();
+
+  }
+
+  /*set cart data api to DB if auth
+  */
+  authSetCart() {
+    let tok = this.token.get();
+   this.cartForm.user = tok.split('.')[1] + 'Y9';
+   this.guestSetCart();
+
+  }
+
+  /*set cart data api to DB if guest
+  */
+  guestSetCart() {
+    this.call.setCart(this.cartForm).subscribe(
+      data =>  console.log(data),
+      error => this.dataCartNotify(error)
+    );
+  }
+
+  /*user data if success
+  */
+  dataCartNotify(error) {
+    this.notify.info('Waiting... ', { timeout: 2000 });
+    setTimeout(() => {
+      this.notify.success(error.error.text, { timeout: 0 });
+    }, 4000);
   }
 
   /*change Url and remove %20
@@ -231,6 +262,9 @@ export class ViewMoreComponent implements OnInit {
   productData(data) {
     this.product = data;
     this.price = data.new_price;
+    this.cartForm.name = data.name;
+    this.cartForm.item = data.item;
+    this.cartForm.img = data.img2;
     this.product ?? this.notFound();//if data not fount get error (404)
     this.trim = this.getWords(data.introduction);
     this.splitData(data);
@@ -257,7 +291,7 @@ export class ViewMoreComponent implements OnInit {
     this.getUrlName();
     this.getRate();
     this.getProduct();
-
+    this.auth.authStatus.subscribe(value => this.loggedIn = value);
     //this.changeUrl();
     this.quantity();
     $.getScript("assets/js/main.js");//import script link in component html
