@@ -81,6 +81,12 @@ export class CallApiService {
     return this.http.post(`${this.url}/allShop`, data);
 
   }
+  /*get all products data
+  */
+  produtsFilter(data){
+    return this.http.post(`${this.url}/produtsFilter`, data);
+
+  }
 
   /*set product in cart DB
   */
@@ -101,6 +107,22 @@ export class CallApiService {
     return this.http.post(`${this.url}/deleteCart`, data);
 
   }
+  /*next and prev pages
+  */
+  paginateUrl(data){
+    return this.http.post(data, data);
+  }
 
+  /* get total of price and count of customer cart for navbar
+  */
+  getTotalPriceForNav(data){
+    return this.http.post(`${this.url}/navTotalPrice`, data);
+  }
+
+  /* data fro checkout
+  */
+  checkOutData(data){
+    return this.http.post(`${this.url}/checkOutData`, data);
+  }
 
 }

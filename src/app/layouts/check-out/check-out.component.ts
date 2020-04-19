@@ -1,6 +1,12 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { IPayPalConfig, ICreateOrderRequest } from 'ngx-paypal';
- declare var paypal;
+import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
+import { CallApiService } from "../../services/call-api.service";
+import { AuthService } from '../../services/auth.service';
+import { TokenService } from '../../services/token.service';
+import { Router, Routes, RouterModule, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { SnotifyService } from 'ng-snotify';
+declare var paypal;
 
 @Component({
   selector: 'app-check-out',
@@ -9,47 +15,99 @@ import { IPayPalConfig, ICreateOrderRequest } from 'ngx-paypal';
 })
 export class CheckOutComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private location: Location,
+    private call: CallApiService,
+    private myRouter: Router,
+    private auth: AuthService,
+    private token: TokenService,
+    private notify: SnotifyService,
+  ) { }
 
   @ViewChild('paypal', { static: true }) paypalElement: ElementRef;
 
-    product = {
-      price: 777.77,
-      description: 'used couch, decent condition',
-      img: 'assets/couch.jpg'
-    };
+  product = {
+    price: 777.77,
+    description: 'used couch, decent condition',
+    img: 'assets/couch.jpg'
+  };
 
-    paidFor = false;
+  public form = {
+    tok: null,
+  };
 
-    ngOnInit() {
-      paypal
-        .Buttons({
-          createOrder: (data, actions) => {
-            return actions.order.create({
-              purchase_units: [
-                {
-                  description: this.product.description,
-                  amount: {
-                    currency_code: 'USD',
-                    value: this.product.price
-                  }
-                }
-              ]
-            });
-          },
-          onApprove: async (data, actions) => {
-            const order = await actions.order.capture();
-            this.paidFor = true;
-            console.log(order);
-          },
-          onError: err => {
-            console.log(err);
-          }
-        })
-        .render(this.paypalElement.nativeElement);
-    }
+  paidFor = false;
+  public loggedIn: boolean;// check auth
+  arrayData: any;
+  total: number;
+  count: number;
+
+
+  getData() {
+    this.loggedIn ? this.authGetCart()
+      : this.guestGetCart();
+  }
+
+  /*get cart data api to DB if auth
+  */
+  authGetCart() {
+    let tok = this.token.get();
+    this.form.tok = tok.split('.')[1] + 'Y9';
+    this.guestGetCart();
 
   }
+
+
+  /*set cart data api to DB if guest
+  */
+  guestGetCart() {
+    this.call.checkOutData(this.form).subscribe(
+      data => this.resultData(data),
+      error => console.log(error)
+    );
+  }
+
+  resultData(data) {
+    this.arrayData = data.data;
+    this.total = data.total;
+    this.product.price = data.total;
+    this.count = data.count;
+  }
+
+  ngOnInit() {
+    this.getData();
+    this.auth.authStatus.subscribe(value => this.loggedIn = value);
+
+    paypal
+      .Buttons({
+        createOrder: (data, actions) => {
+          return actions.order.create({
+            purchase_units: [
+              {
+                description: this.product.description,
+                amount: {
+                  currency_code: 'USD',
+                  value: this.product.price
+                }
+              }
+            ]
+          });
+        },
+        onApprove: async (data, actions) => {
+          const order = await actions.order.capture();
+          this.paidFor = true;
+          console.log(order);
+        },
+        onError: err => {
+          console.log(err);
+        }
+      })
+      .render(this.paypalElement.nativeElement);
+  }
+
+
+
+}
 
 // paypal package
 //public payPalConfig?: IPayPalConfig;

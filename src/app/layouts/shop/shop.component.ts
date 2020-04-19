@@ -24,15 +24,24 @@ export class ShopComponent implements OnInit {
 
   public form = {
     name: null,
+    skip: 0,
   };
 
-  status: boolean;
+  status: boolean; //to show filter data or hidden
+  loadMoreStatus: boolean;
   dataLength: number;
   filterLength: number;
-  dataFilter = [];
-  products = [];
+  dataFilter = [];//data after filter
+  products = [];//all data
+  allProduts = [];//all data for filter
   colorArray = [];
   brandsArray = [];
+  paginate = {
+  next_page_url: null,
+  prev_page_url: null,
+  };
+
+  //  وتخليه يساوي الداتا اللي جايه علي طولproductsملحوظة لو عايز تعمل زرار المزيد لازم تعدل في اللارافيل وبعدين تعدل الاري
 
   filterPrice() {
     //filter Price
@@ -58,14 +67,21 @@ export class ShopComponent implements OnInit {
     });
   }
 
+  /*next and prev pages
+  */
+  PAGINATE(url){
+    this.call.paginateUrl(url).subscribe(
+      data => this.productsData(data),
+      error => console.log(error)
+    );
+  }
 
-
-  color(event, type) {
-
-    this.getProducts(); //get data from api
+  checkBox(event, type) {
+    this.dataFilter = []; //delete all filters
+    this.getAll(); //get data from api
     var term = event.target.name; // name of input
     var search = new RegExp(term, 'i'); // prepare a regex object search like php %value%
-    var tt = new RegExp(type, 'i');
+    //var tt = new RegExp(type, 'i');
     //var check = this.dataFilter.find(item => search.test(item.color)); //check if already exists in filter array
     //  console.log(check.length);
 
@@ -73,7 +89,8 @@ export class ShopComponent implements OnInit {
     if (event.target.checked) {
 
       if (type == 'color') {
-        var res = this.products.filter(x => search.test(x.color));//this.products.filter(item => search.test(item.color)/*&&*/);//search in data from api
+        this.colorArray = [];// delete all filter color
+        var res = this.allProduts.filter(x => search.test(x.color));//this.products.filter(item => search.test(item.color)/*&&*/);//search in data from api
 
         if (res) {
           res.forEach(x => {
@@ -87,7 +104,8 @@ export class ShopComponent implements OnInit {
         }
 
       } else if (type == 'brand') {
-        var res = this.products.filter(x => search.test(x.brand));//this.products.filter(item => search.test(item.color)/*&&*/);//search in data from api
+        this.brandsArray = [];// delete all filter brands
+        var res = this.allProduts.filter(x => search.test(x.brand));//this.products.filter(item => search.test(item.color)/*&&*/);//search in data from api
 
         if (res) {
           res.forEach(x => {
@@ -164,15 +182,23 @@ export class ShopComponent implements OnInit {
 
   }
 
+  /*get all produts data for filter
+  */
+  getAll() {
+    this.call.produtsFilter(this.form).subscribe(
+      data => this.allProduts = data,
+      error => console.log(error)
+    );
+  }
+
 
   /*product data from api
   */
   productsData(data) {
-    this.products = data;
+    this.paginate = data;
+    this.products = data.data;
     this.dataLength = this.products.length;  //count products
     this.products ?? this.notFound();//if data not fount get error (404)
-    //console.log(this.products);
-
   }
 
   /*if product error
@@ -190,24 +216,101 @@ export class ShopComponent implements OnInit {
     );
   }
 
+  /*get more data from api by loadmore button
+  */
+  getMore(num) {
+    this.form.skip = num; //number of this.products.length
+    this.call.shop(this.form).subscribe(
+      data => this.getMoreData(data),
+      error => console.log(error)
+    );
+  }
+
+  /*data from getMore function
+  */
+  getMoreData(data) {
+    data.length ? this.status = true : this.status = false; //chanage loadmor btn to loadcomplet
+    for (let more of data) {
+      this.products.push(more);
+      this.dataLength = this.products.length; // show number of current produts
+      this.form.skip = this.products.length; //to send skip number
+    }
+
+  }
+
 
   ngOnInit(): void {
     this.filterPrice();
     this.Active.classList.add("active");
     this.getProducts();
+    this.clickCheckBox();
 
   }
 
+
+  clickCheckBox() {
+    $(document).on('click', 'input[class="brands"]', function() {
+      $('input[class="brands"]').not(this).prop('checked', false);
+    });
+    $(document).on('click', 'input[class="color"]', function() {
+      $('input[class="color"]').not(this).prop('checked', false);
+    });
+  }
+
+
   ngAfterViewInit(): void {
+    this.getAll();//get all data for filter
 
+    /*(function() {
+      var divElements = [
+        { imgUrl: 'http://i.imgur.com/CmU3tnl.jpg' },
+        { imgUrl: 'http://i.imgur.com/TDdxS9H.png' },
+        { imgUrl: 'http://i.imgur.com/39rpmwB.jpg' },
+        { imgUrl: 'http://i.imgur.com/39rpmwB.jpg' },
+        { imgUrl: 'http://i.imgur.com/CmU3tnl.jpg' },
+        { imgUrl: 'http://i.imgur.com/CmU3tnl.jpg' },
+        { imgUrl: 'http://i.imgur.com/CmU3tnl.jpg' },
+        { imgUrl: 'http://i.imgur.com/CmU3tnl.jpg' },
+        { imgUrl: 'http://i.imgur.com/CmU3tnl.jpg' },
+        { imgUrl: 'http://i.imgur.com/CmU3tnl.jpg' }
+      ];
+      var loadMore = document.querySelector('#loadMore');
+      var divNumber = 2;
 
+      loadMore.addEventListener('click', function(e) {
+        e.preventDefault();
+        var container = document.getElementById('container');
+        for (var i = 0; i < divNumber; i++) {
+          window.scrollTo(0, document.body.scrollHeight);
+          if (i < divElements.length) {
+            var element = createElement(divElements[i].imgUrl);
+            container.appendChild(element);
+          }
 
+          if (i >= divElements.length) {
+            loadMore.innerHTML = "Load Completed";
+            return;
+          }
 
+        }
+        divElements.splice(0, divNumber);
+
+      });
+    })();
+    loadMore.click();
+
+    function createElement(url) {
+      var container = document.createElement('div');
+      container.setAttribute('class', 'article-loop');
+      var image = document.createElement('img');
+      image.setAttribute('src', url);
+      container.appendChild(image);
+      return container;
+    }*/
   }
 
   ngOnDestroy() {
     this.Active.classList.remove("active");// remove class whene leaves component
-
   }
 
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, Input, Output, } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input, Output, ViewChild } from '@angular/core';
 import { Router, Routes, RouterModule, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';//الترجمة
@@ -6,6 +6,7 @@ import { AuthService } from '../services/auth.service';
 import { TokenService } from '../services/token.service';
 import { CallApiService } from "../services/call-api.service";
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { ShoppingCartComponent } from '../layouts/shopping-cart/shopping-cart.component';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -50,6 +51,8 @@ export class NavBarComponent implements OnInit {
 
   public loggedIn: boolean;// check auth
   userName: string;// get auth name
+  cartCount: number;
+  cartTotal: number;
   //userName: Observable<any>;
   //testObservable:any;
 
@@ -59,13 +62,44 @@ export class NavBarComponent implements OnInit {
     tok: null,
   };
 
+  //shoppingCartComponentObject = new ShoppingCartComponent();//get data from ShoppingCart
+  //shopCartData = this.shoppingCartComponentObject.sendDataToNavBar();
 
+  interval = setInterval(() => { //get total price
+    this.getTotalPrice();
+  }, 3000);
+
+  /*
+  */
   getUserFromApi() {
     let g = this.token.get();
     if (this.loggedIn) { //chech token and login
       this.form.tok = g.split('.')[1] + 'Y9';
       this.callAuth();
     }
+  }
+
+  /* get total of price and count of customer cart for navbar
+  */
+  getTotalPrice() {
+    if (this.loggedIn) { //chech auth
+      let tok = this.token.get();
+      this.form.tok = tok.split('.')[1] + 'Y9';
+    }
+
+    this.call.getTotalPriceForNav(this.form).subscribe(
+      data => this.TotalPriceData(data),
+      error => console.log(error)
+
+    );
+  }
+
+  /* total price data
+  */
+  TotalPriceData(data) {
+    this.cartCount = data.count;
+    this.cartTotal = data.total;
+
   }
 
   /*get user data from api
@@ -116,11 +150,12 @@ export class NavBarComponent implements OnInit {
   /*when page component
    */
   ngOnInit(): void {
-
+    //console.log(this.shopCartData);
     //this.url = location.pathname.replace('/', '');//part one of URL without slash
     this.auth.authStatus.subscribe(value => this.loggedIn = value);
     this.getUserFromApi();
-
+    this.getTotalPrice();
+    this.interval;
   }
 
   /*when leave component
@@ -133,10 +168,10 @@ export class NavBarComponent implements OnInit {
   */
   ngAfterViewInit() {
 
-
   }
 
   intervalFun() {
+
     /*var timesRun = 0;
     var interval = setInterval(() => {
       timesRun += 1;

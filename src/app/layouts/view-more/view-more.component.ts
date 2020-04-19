@@ -39,7 +39,7 @@ export class ViewMoreComponent implements OnInit {
   price: number;
   rateCount: number;
   trim: string;
-  product = {};
+  product: any;
   color = [];
   size = [];
 
@@ -260,12 +260,12 @@ export class ViewMoreComponent implements OnInit {
   /*product data from api
   */
   productData(data) {
+    this.notFound(data); //if data not fount get error (404)
     this.product = data;
     this.price = data.new_price;
     this.cartForm.name = data.name;
     this.cartForm.item = data.item;
     this.cartForm.img = data.img2;
-    this.product ?? this.notFound();//if data not fount get error (404)
     this.trim = this.getWords(data.introduction);
     this.splitData(data);
 
@@ -273,15 +273,15 @@ export class ViewMoreComponent implements OnInit {
 
   /*if product error
   */
-  notFound() {
-    this.myRouter.navigateByUrl('not_found');
+  notFound(data) {
+    data ?? this.myRouter.navigateByUrl('not_found');
   }
   /*get products data
   */
   getProduct() {
     this.call.viewMore(this.form).subscribe(
       data => this.productData(data),
-      error => this.notFound()
+      error => this.notFound(error)
     );
   }
 

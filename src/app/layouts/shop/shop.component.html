@@ -32,28 +32,28 @@
             <div class="bc-item">
               <label for="bc-calvin">
                 Calvin Klein
-                <input type="checkbox" id="bc-calvin" (change)="color($event,'brand')"  name="Calvin Klein">
+                <input type="checkbox" class="brands" id="bc-calvin" (change)="checkBox($event,'brand')" name="Calvin Klein">
                 <span class="checkmark"></span>
               </label>
             </div>
             <div class="bc-item">
               <label for="bc-diesel">
                 Diesel
-                <input type="checkbox" id="bc-diesel" >
+                <input type="checkbox" id="bc-diesel" class="brands" (change)="checkBox($event,'brand')" name="Diesel">
                 <span class="checkmark"></span>
               </label>
             </div>
             <div class="bc-item">
               <label for="bc-polo">
                 Polo
-                <input type="checkbox" id="bc-polo">
+                <input type="checkbox" id="bc-polo" class="brands" (change)="checkBox($event,'brand')" name="Polo">
                 <span class="checkmark"></span>
               </label>
             </div>
             <div class="bc-item">
               <label for="bc-tommy">
                 Tommy Hilfiger
-                <input type="checkbox" id="bc-tommy">
+                <input type="checkbox" id="bc-tommy" class="brands" (change)="checkBox($event,'brand')" name="Tommy Hilfiger">
                 <span class="checkmark"></span>
               </label>
             </div>
@@ -79,29 +79,29 @@
         <div class="filter-widget">
           <h4 class="fw-title">Color</h4>
           <div class="fw-color-choose">
-            <div class="cs-item">
-              <input type="checkbox" id="cs-black" (change)="color($event,'color')" name="black">
+            <div class="">
+              <input type="checkbox" id="cs-black" class="color" (change)="checkBox($event,'color')" name="black">
               <label class="cs-black" for="cs-black">Black</label>
             </div>
             <div class="cs-item">
-              <input type="checkbox" id="cs-violet" (change)="color($event)" name="violet">
-              <label class="cs-violet" for="cs-violet" >Violet</label>
+              <input type="checkbox" id="cs-violet" class="color" (change)="checkBox($event,'color')" name="violet">
+              <label class="cs-violet" for="cs-violet">Violet</label>
             </div>
             <div class="cs-item">
-              <input type="checkbox" id="cs-blue" (change)="color($event)" name="blue">
-              <label class="cs-blue" for="cs-blue" >Blue</label>
+              <input type="checkbox" id="cs-blue" class="color" (change)="checkBox($event,'color')" name="blue">
+              <label class="cs-blue" for="cs-blue">Blue</label>
             </div>
             <div class="cs-item">
-              <input type="checkbox" id="cs-yellow"  (change)="color($event)" name="yellow">
+              <input type="checkbox" id="cs-yellow" class="color" (change)="checkBox($event,'color')" name="yellow">
               <label class="cs-yellow" for="cs-yellow">Yellow</label>
             </div>
             <div class="cs-item">
-              <input type="checkbox" id="cs-red" (change)="color($event)" name="red">
-              <label class="cs-red" for="cs-red" >Red</label>
+              <input type="checkbox" id="cs-red" class="color" (change)="checkBox($event,'color')" name="red">
+              <label class="cs-red" for="cs-red">Red</label>
             </div>
             <div class="cs-item">
-              <input type="checkbox" id="cs-green" (change)="color($event)" name="green">
-              <label class="cs-green" for="cs-green" >Green</label>
+              <input type="checkbox" id="cs-green" class="color" (change)="checkBox($event,'color')" name="green">
+              <label class="cs-green" for="cs-green">Green</label>
             </div>
           </div>
         </div>
@@ -133,8 +133,8 @@
               </div>
             </div>
             <div class="col-lg-5 col-md-5 text-right">
-              <p  [hidden]="status"> {{dataLength}} Product</p>
-              <p  [hidden]="!status"> {{filterLength}} Product</p>
+              <p [hidden]="status"> {{dataLength}} Product</p>
+              <p [hidden]="!status"> {{filterLength}} Product</p>
             </div>
           </div>
         </div>
@@ -168,7 +168,6 @@
                 </div>
               </div>
             </div>
-
             <div class="col-lg-4 col-sm-6" *ngFor="let data of dataFilter" [hidden]="!status">
               <div class="product-item">
                 <div class="pi-pic">
@@ -200,10 +199,17 @@
         </div>
         <div class="loading-more">
           <i class="icon_loading"></i>
-          <a href="#">
-            Loading More
+          <a [routerLink]="" (click)="getMore(dataLength)">
+            <strong [hidden]="!loadMoreStatus">Loading More</strong>
+            <strong [hidden]="loadMoreStatus">Loading Completed</strong>
           </a>
+          <!--<div id="container"></div>
+          <a [routerLink]="" id="loadMore">Load More</a>-->
+          <br>
+          <button type="button" name="button" (click)="PAGINATE(paginate.next_page_url)" [hidden]="!paginate.next_page_url">next</button>
+          <button type="button" name="button" (click)="PAGINATE(paginate.prev_page_url)" [hidden]="!paginate.prev_page_url">back</button>
         </div>
+
       </div>
     </div>
   </div>

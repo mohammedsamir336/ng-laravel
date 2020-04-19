@@ -82,11 +82,9 @@
                         <div class="order-total">
                             <ul class="order-table">
                                 <li>Product <span>Total</span></li>
-                                <li class="fw-normal">Combination x 1 <span>$60.00</span></li>
-                                <li class="fw-normal">Combination x 1 <span>$60.00</span></li>
-                                <li class="fw-normal">Combination x 1 <span>$120.00</span></li>
-                                <li class="fw-normal">Subtotal <span>$240.00</span></li>
-                                <li class="total-price">Total <span>$240.00</span></li>
+                                <li class="fw-normal" *ngFor="let data of arrayData"><a class="text-info"[routerLink]="['/view/',data.name]" target="_blank">{{data.name}}</a><span>${{data.price}}</span></li>
+                                <li class="total-price">Total <span>${{total}}</span></li>
+
                             </ul>
                             <div class="payment-check">
                                 <div class="pc-item">

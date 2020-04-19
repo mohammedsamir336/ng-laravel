@@ -1,117 +1,122 @@
 <!-- Breadcrumb Section Begin -->
 <div class="breacrumb-section">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="breadcrumb-text product-more">
-                    <a [routerLink]="['/home']"><i class="fa fa-home"></i> Home</a>
-                    <a [routerLink]="['/shop']">Shop</a>
-                    <span>Shopping Cart</span>
-                </div>
-            </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="breadcrumb-text product-more">
+          <a [routerLink]="['/home']"><i class="fa fa-home"></i> Home</a>
+          <a [routerLink]="['/shop']">Shop</a>
+          <span>Shopping Cart</span>
         </div>
+      </div>
     </div>
+  </div>
 </div>
 <!-- Breadcrumb Section Begin -->
 
 <!-- Shopping Cart Section Begin -->
 <section class="shopping-cart spad">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="cart-table">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Image</th>
-                                <th class="p-name">Product Name</th>
-                                <th>Price</th>
-                                <th>Quantity</th>
-                                <th>Total</th>
-                                <th><i class="ti-close"></i></th>
-                            </tr>
-                        </thead>
-                        <tbody >
-                            <tr *ngFor="let cart of cartData" [hidden]="!cartData.length">
-                                <td class="cart-pic first-row"><img src="assets/img/cart-page/{{cart.img}}" alt=""></td>
-                                <td class="cart-title first-row">
-                                    <h5>{{cart.name}}</h5>
-                                </td>
-                                <td class="p-price first-row">${{cart.price / cart.number}}</td>
-                                <td class="qua-col first-row">
-                                    <div class="quantity">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="cart-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Image</th>
+                <th class="p-name">Product Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+                <th><i class="ti-close"></i></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let cart of cartData">
+                <td class="cart-pic first-row"><img src="assets/img/cart-page/{{cart.img}}" alt=""></td>
+                <td class="cart-title first-row">
+                  <h5>{{cart.name}}</h5>
+                </td>
+                <td class="p-price first-row">${{cart.price / cart.number}}</td>
+                <td class="qua-col first-row">
+                  <div class="quantity">
 
-                                          {{cart.number}}
+                    {{cart.number}}
 
-                                    </div>
-                                </td>
-                                <td class="total-price first-row">${{cart.price}}</td>
-                                <td class="close-td first-row"><i class="ti-close" (click)="delCart(cart._id)"></i></td>
-                            </tr>
-                            <tr>
-                                <td class="cart-pic"><img src="assets/img/cart-page/product-2.jpg" alt=""></td>
-                                <td class="cart-title">
-                                    <h5>American lobster</h5>
-                                </td>
-                                <td class="p-price">$60.00</td>
-                                <td class="qua-col">
-                                    <div class="quantity">
-                                        <div class="pro-qty">
-                                            <input type="text" value="1">
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="total-price">$60.00</td>
-                                <td class="close-td"><i class="ti-close"></i></td>
-                            </tr>
-                            <tr>
-                                <td class="cart-pic"><img src="assets/img/cart-page/product-3.jpg" alt=""></td>
-                                <td class="cart-title">
-                                    <h5>Guangzhou sweater</h5>
-                                </td>
-                                <td class="p-price">$60.00</td>
-                                <td class="qua-col">
-                                    <div class="quantity">
-                                        <div class="pro-qty">
-                                            <input type="text" value="1">
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="total-price">$60.00</td>
-                                <td class="close-td"><i class="ti-close"></i></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="container text-center ml-5" [hidden]="cartData.length">
-                      <h2 class="text-info ">Your Cart Is Empty....</h2>
+                  </div>
+                </td>
+                <td class="total-price first-row">${{cart.price}}</td>
+                <td class="close-td first-row"><i class="ti-close" (click)="delCart(cart._id)"></i></td>
+              </tr>
+              <tr>
+                <td class="cart-pic"><img src="assets/img/cart-page/product-2.jpg" alt=""></td>
+                <td class="cart-title">
+                  <h5>American lobster</h5>
+                </td>
+                <td class="p-price">$60.00</td>
+                <td class="qua-col">
+                  <div class="quantity">
+                    <div class="pro-qty">
+                      <input type="text" value="1">
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-4">
-                        <div class="cart-buttons">
-                            <a href="#" class="primary-btn continue-shop">Continue shopping</a>
-                            <a href="#" class="primary-btn up-cart">Update cart</a>
-                        </div>
-                        <div class="discount-coupon">
-                            <h6>Discount Codes</h6>
-                            <form action="#" class="coupon-form">
-                                <input type="text" placeholder="Enter your codes">
-                                <button type="submit" class="site-btn coupon-btn">Apply</button>
-                            </form>
-                        </div>
+                  </div>
+                </td>
+                <td class="total-price">$60.00</td>
+                <td class="close-td"><i class="ti-close"></i></td>
+              </tr>
+              <tr>
+                <td class="cart-pic"><img src="assets/img/cart-page/product-3.jpg" alt=""></td>
+                <td class="cart-title">
+                  <h5>Guangzhou sweater</h5>
+                </td>
+                <td class="p-price">$60.00</td>
+                <td class="qua-col">
+                  <div class="quantity">
+                    <div class="pro-qty">
+                      <input type="text" value="1">
                     </div>
-                    <div class="col-lg-4 offset-lg-4">
-                        <div class="proceed-checkout">
-                            <ul>
-                                <li class="subtotal">Subtotal <span>$240.00</span></li>
-                                <li class="cart-total">Total <span>$240.00</span></li>
-                            </ul>
-                            <a [routerLink]="['/checkout']" class="proceed-btn">PROCEED TO CHECK OUT</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                  </div>
+                </td>
+                <td class="total-price">$60.00</td>
+                <td class="close-td"><i class="ti-close"></i></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="container text-center ml-5" [hidden]="cartData != 0">
+            <h2 class="text-info ">Your Cart Is Empty....</h2>
+          </div>
+          <div class="loading-more" [hidden]="cartData == 0">
+            <i class="icon_loading"></i>
+            <a [routerLink]="" (click)="getMore(arrayData.length)">
+              <strong [hidden]="!status">Loading More</strong>
+              <strong [hidden]="status">Loading Completed</strong>
+            </a>
+          </div>
         </div>
+
+        <div class="row">
+          <div class="col-lg-4">
+
+            <div class="discount-coupon">
+              <h6>Discount Codes</h6>
+              <form action="#" class="coupon-form">
+                <input type="text" placeholder="Enter your codes" name="discount">
+                <button type="submit" class="site-btn coupon-btn">Apply</button>
+              </form>
+            </div>
+          </div>
+          <div class="col-lg-4 offset-lg-4">
+            <div class="proceed-checkout">
+              <ul>
+                <li class="subtotal">Subtotal <span>${{total}}</span></li>
+                <li class="cart-total">Total <span>${{total}}</span></li>
+              </ul>
+              <a [routerLink]="['/checkout']" class="proceed-btn">PROCEED TO CHECK OUT</a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </section>
 <!-- Shopping Cart Section End -->
