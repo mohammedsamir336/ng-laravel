@@ -11,7 +11,6 @@ export class CallApiService {
     private url = 'http://localhost:8080/ngLaravel/public/api';
 
     //call api
-    //هيظهر في صفحة فيرست في فنشن جيت بوست
     callApi(){
        return this.http.get('https://jsonplaceholder.typicode.com/posts');
        //.pipe(map(result => result));
@@ -123,6 +122,18 @@ export class CallApiService {
   */
   checkOutData(data){
     return this.http.post(`${this.url}/checkOutData`, data);
+  }
+
+  /* search
+  */
+  search(data){
+    return this.http.post(`${this.url}/search`, data);
+  }
+
+  /* search
+  */
+  searchPaginate(data){
+    return this.http.post(`${this.url}/${data}`, data);
   }
 
 }

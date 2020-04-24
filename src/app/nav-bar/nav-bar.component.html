@@ -19,8 +19,8 @@
       <div class="ht-right">
         <a [routerLink]="['/register' ]" [hidden]="loggedIn" href="#" class="login-panel"><i class="fa fa-user"></i>{{ 'HOME.register' | translate}}</a>
         <a [routerLink]="['/login' ]" [hidden]="loggedIn" href="#" class="login-panel mr-3"><i class="fa fa-user"></i>{{ 'HOME.login' | translate}}</a>
-        <a  title="logout" href="#" [hidden]="!loggedIn"  (click)="logOut($event)" class="login-panel mr-3">{{ 'HOME.logout' | translate}}</a>
-        <a  [hidden]="!loggedIn"  class="login-panel mr-3">{{userName}}</a>
+        <a title="logout" href="#" [hidden]="!loggedIn" (click)="logOut($event)" class="login-panel mr-3">{{ 'HOME.logout' | translate}}</a>
+        <a [hidden]="!loggedIn" class="login-panel mr-3">{{userName}}</a>
 
         <div class="lan-selector">
 
@@ -50,29 +50,37 @@
         <div class="col-lg-2 col-md-2">
           <div class="logo">
             <a href="./index.html">
-              <img src="assets/img/logo.png" alt="">
+              <img src="assets/img/logo.png" alt="ccc">
             </a>
           </div>
         </div>
         <div class="col-lg-7 col-md-7">
-          <div class="advanced-search">
-            <button type="button" class="category-btn">All Categories</button>
-            <div class="input-group">
-              <input type="text" placeholder="What do you need?">
-              <button type="button"><i class="ti-search"></i></button>
+          <form class="" action="index.html" method="post">
+            <div class="advanced-search">
+              <button type="button" class="category-btn">All Categories</button>
+              <div class="input-group">
+                <input class="text-info" type="text" name="search" placeholder="What do you need?" [(ngModel)]="form.search" required>
+                <button type="submit" (click)="getSearch()" [disabled]="!form.search"><i class="ti-search"></i></button>
+              </div>
             </div>
-          </div>
+          </form>
+          <!--<div class="card" style="width: 13rem; ">
+            <div class="card-body">
+              <strong class="text-danger">No Results found!</strong>
+            </div>
+          </div>-->
         </div>
+
         <div class="col-lg-3 text-right col-md-3">
           <ul class="nav-right">
             <li class="heart-icon">
-              <a [routerLink] ="['']">
+              <a [routerLink]="['']">
                 <i class="icon_heart_alt"></i>
                 <span>1</span>
               </a>
             </li>
             <li class="cart-icon">
-              <a [routerLink] ="['/Shopping Cart']">
+              <a [routerLink]="['/Shopping Cart']">
                 <i class="icon_bag_alt"></i>
                 <span>{{cartCount}}</span>
               </a>
@@ -150,8 +158,8 @@
               <li><a href="#">Men's</a></li>
               <li><a href="#">Women's</a></li>
               <li><a href="#">Kid's</a></li>
-              <li (click)="googleAr()"><a >googlr ar</a></li>
-              <li (click)="googleEn()"><a >google en</a></li>
+              <li (click)="googleAr()"><a>googlr ar</a></li>
+              <li (click)="googleEn()"><a>google en</a></li>
             </ul>
           </li>
           <li id="Cart"><a [routerLink]="['/Shopping Cart']">{{ 'HOME.cart' | translate}}</a></li>

@@ -39,6 +39,8 @@ import { ViewMoreComponent } from './layouts/view-more/view-more.component';
 import { ScrollTopComponent } from './layouts/scroll-top/scroll-top.component';
 import { ForgetPassComponent } from './auth/forget-pass/forget-pass.component';
 import { ResetPassComponent } from './auth/reset-pass/reset-pass.component';
+import { SearchComponent } from './search/search.component';
+
 
 //ngx-translate
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';//الترجمة
@@ -84,6 +86,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ScrollTopComponent,
     ForgetPassComponent,
     ResetPassComponent,
+    SearchComponent,
 
 
   ],

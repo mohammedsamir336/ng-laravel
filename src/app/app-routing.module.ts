@@ -12,6 +12,8 @@ import { FAQsComponent } from './layouts/faqs/faqs.component';
 import { ViewMoreComponent } from './layouts/view-more/view-more.component';
 import { ForgetPassComponent } from './auth/forget-pass/forget-pass.component';
 import { ResetPassComponent } from './auth/reset-pass/reset-pass.component';
+import { SearchComponent } from './search/search.component';
+
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -25,6 +27,7 @@ const routes: Routes = [
   { path: 'view/:name', component:   ViewMoreComponent, },
   { path: 'forget password', component:  ForgetPassComponent, },
   { path: 'restPass/:token', component:   ResetPassComponent, },
+  { path: 'search/:name', component:   SearchComponent, },
   { path: 'FAQs', component:  FAQsComponent, },
   { path: '**', component: NotFoundComponent, },
 

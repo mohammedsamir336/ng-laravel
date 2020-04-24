@@ -27,6 +27,11 @@ export class ShopComponent implements OnInit {
     skip: 0,
   };
 
+  paginate = {
+  next_page_url: null,
+  prev_page_url: null,
+  };
+
   status: boolean; //to show filter data or hidden
   loadMoreStatus: boolean;
   dataLength: number;
@@ -36,10 +41,7 @@ export class ShopComponent implements OnInit {
   allProduts = [];//all data for filter
   colorArray = [];
   brandsArray = [];
-  paginate = {
-  next_page_url: null,
-  prev_page_url: null,
-  };
+
 
   //  وتخليه يساوي الداتا اللي جايه علي طولproductsملحوظة لو عايز تعمل زرار المزيد لازم تعدل في اللارافيل وبعدين تعدل الاري
 

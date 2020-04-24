@@ -59,7 +59,8 @@ export class NavBarComponent implements OnInit {
   /*send token to call api services to get auth data
   */
   public form = {
-    tok: null,
+    tok   : null,
+    search: null,
   };
 
   //shoppingCartComponentObject = new ShoppingCartComponent();//get data from ShoppingCart
@@ -170,9 +171,15 @@ export class NavBarComponent implements OnInit {
 
   }
 
-  intervalFun() {
 
-    /*var timesRun = 0;
+  getSearch(){
+  let url = this.form.search.replace(' ', '_');
+  this.myRouter.navigateByUrl('/search/'+url+'');
+  }
+
+    /*intervalFun() {
+
+    var timesRun = 0;
     var interval = setInterval(() => {
       timesRun += 1;
       if (timesRun === 3) {
@@ -190,9 +197,9 @@ export class NavBarComponent implements OnInit {
 
         );
       }
-    }, 3000);*/
+    }, 3000);
     //setInterval(this.rr,1000);
-  }
+  }*/
 
 
   /*to add class acive to li of page For the page I'm on
