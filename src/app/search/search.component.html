@@ -44,7 +44,7 @@
         <div class="product-show-option">
           <div class="row">
             <div class="col-lg-7 col-md-7">
-              <div class="select-option">
+              <div class="select-option" [hidden]="!products.length">
                 <div class="sorting">
                   <p>page {{paginate.current_page}} of {{paginate.last_page}}</p>
                 </div>
@@ -53,14 +53,14 @@
                 </select>
               </div>
             </div>
-            <div class="col-lg-5 col-md-5 text-right">
+            <div class="col-lg-5 col-md-5 text-right" [hidden]="!products.length">
               <p> {{products.length}} Product of {{paginate.total}} </p>
             </div>
           </div>
         </div>
         <div class="product-list">
           <div class="row">
-            <div class="col-lg-4 col-sm-6" *ngFor="let data of products" [hidden]="status">
+            <div class="col-lg-4 col-sm-6" *ngFor="let data of products" [hidden]="!products.length">
               <div class="product-item">
                 <div class="pi-pic">
                   <img src="assets/img/products/{{data.img4}}" alt="">
@@ -88,10 +88,30 @@
                 </div>
               </div>
             </div>
-
+            <div class="col-lg-4 col-sm-6" [hidden]="products.length">
+              <h3 class="text-center">{{searchError}}</h3>
+            </div>
           </div>
         </div>
-        <div class="loading-more">
+        <div class="loading-more ml-5">
+          <nav aria-label="Page navigation example" [hidden]="!products.length || pagesNumber.length == 1">
+            <ul class="pagination">
+              <li class="page-item">
+                <a class="page-link" [routerLink]="" (click)="PAGINATE(paginate.prev_page_url)" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                  <span class="sr-only">Previous</span>
+                </a>
+              </li>
+              <li class="page-item"><a class="page-link" [routerLink]=""  *ngFor="let number of pagesNumber" (click)="PAGINATE('search?search='+form.search+'&page='+number)" >{{number}}</a></li>
+
+              <li class="page-item">
+                <a class="page-link" [routerLink]="" (click)="PAGINATE(paginate.next_page_url)" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                  <span class="sr-only">Next</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
           <button type="button" name="button" (click)="PAGINATE(paginate.next_page_url)" [hidden]="!paginate.next_page_url">next</button>
           <button type="button" name="button" (click)="PAGINATE(paginate.prev_page_url)" [hidden]="!paginate.prev_page_url">back</button>
         </div>

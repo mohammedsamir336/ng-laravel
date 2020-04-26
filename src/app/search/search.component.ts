@@ -32,8 +32,11 @@ export class SearchComponent implements OnInit {
   };
 
   products = [];
-  allSearchData: any;//all data
+  //allSearchData: any;//all data
+  searchError: string;
+  pagesNumber = [];
 
+// كل ثانية بطابق العنوان بكلمات البحث وابحث في الداتا بيز
   getSearch() {
     // listen for changes
     setInterval(() => {
@@ -45,11 +48,20 @@ export class SearchComponent implements OnInit {
 
         this.call.search(this.form).subscribe(
           data => this.searchData(data),
-          error => console.log(error)
+          error => this.error(error)
         );
       }
     }, 1000);
 
+  }
+
+  /*search error
+  */
+  error(error) {
+    this.searchError = error.error.text; //result not fount
+    this.products = []; //delete old data
+    this.pagesNumber = []; //delete old data
+    this.paginate = error; //delete old data
   }
 
   /*get search data
@@ -57,11 +69,19 @@ export class SearchComponent implements OnInit {
   searchData(data) {
     this.products = data.data;
     this.paginate = data;
+    this.pagesNumber = []; //delete old data of paginate number
+
+    let lastPage = data.last_page; // get last page
+    for (let i = 1; i <= lastPage; i++) { //get number of all pages by for method
+      this.pagesNumber.push(i);
+    }
+
   }
 
+  //العنوان اللي جي من الصفحة الرئيسية (html)
   PAGINATE(url) {
     this.call.searchPaginate(url).subscribe(
-      data =>  this.searchData(data),
+      data => this.searchData(data),
       error => console.log(error)
     );
   }
