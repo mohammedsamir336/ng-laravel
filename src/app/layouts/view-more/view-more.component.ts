@@ -66,6 +66,7 @@ export class ViewMoreComponent implements OnInit {
   };
 
   public commentsForm = {
+    productName: null,
     name: null,
     email: null,
     text: null,
@@ -176,6 +177,7 @@ export class ViewMoreComponent implements OnInit {
   */
   getUrlName() {
     this.form.name = location.pathname.split('/')[2].replace('%20', ' ');
+    this.commentsForm.productName = location.pathname.split('/')[2].replace('%20', ' ');
   }
 
 
@@ -304,11 +306,19 @@ export class ViewMoreComponent implements OnInit {
   */
   setComments(){
     this.call.setComments(this.commentsForm).subscribe(
-      data => this.notify.success(data.message),
+      data => this.setCommentsData(data),
       error => this.errorscomment(error)
     );
   }
-
+  /*action after set comments
+  */
+  setCommentsData(data){
+  this.notify.success(data.message);
+  //delete inputs text after set data
+  this.commentsForm.name= null;
+  this.commentsForm.email= null;
+  this.commentsForm.text= null;
+  }
 
   /*error of comments from api
   */
@@ -321,18 +331,21 @@ export class ViewMoreComponent implements OnInit {
   */
   getComments(){
     this.call.getComments(this.commentsForm).subscribe(
-      data => this.commentsData(data),
+      data => this.commData(data),
       error => console.log(error)
     );
   }
 
   /*comments from api
   */
-  commentsData(data){
+  commData(data){
     this.commentsData = data;
-    console.log(data);
+  /*  data.forEach(element => {
+  let date = element.created_at;
+  console.log(new Date(date,0))
+});*/
+    //console.log(data);
 
-   console.log(new Date(2011, 0, 1));
   }
 
   ngOnInit(): void {
@@ -343,7 +356,9 @@ export class ViewMoreComponent implements OnInit {
     this.auth.authStatus.subscribe(value => this.loggedIn = value);
     //this.changeUrl();
     this.quantity();
-    this.getComments();
+   setInterval(() => { //getComments
+      this.getComments();
+    }, 4000);
     $.getScript("assets/js/main.js");//import script link in component html
   }
 

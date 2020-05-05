@@ -211,10 +211,10 @@
                   <div class="comment-option">
                     <div class="co-item" *ngFor="let comments of commentsData">
                       <div class="avatar-pic">
-                        <img src="assets/img/product-single/avatar-1.png" alt="">
+                        <img [src]="comments.img" alt="">
                       </div>
-                      <div class="avatar-text">
-                        <h5>{{comments.name}} <span>27 Aug 2019</span></h5>
+                      <div class="avatar-text" dir="ltr">
+                        <h5 dir="ltr">{{comments.name}}<span dir="ltr">{{comments.created_at}}</span></h5>
                         <div class="at-reply">{{comments.text}}</div>
                       </div>
                     </div>
