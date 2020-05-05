@@ -136,4 +136,16 @@ export class CallApiService {
     return this.http.post(`${this.url}/${data}`, data);
   }
 
+  /*comments in view more page
+  */
+  setComments(data){
+      return this.http.post(`${this.url}/setComments`, data);
+    }
+
+    /* get comments in view more page
+    */
+    getComments(data){
+        return this.http.post(`${this.url}/getComments`, data);
+      }
+
 }

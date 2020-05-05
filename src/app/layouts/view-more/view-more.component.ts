@@ -40,6 +40,7 @@ export class ViewMoreComponent implements OnInit {
   rateCount: number;
   trim: string;
   product: any;
+  commentsData: any;
   color = [];
   size = [];
 
@@ -63,6 +64,20 @@ export class ViewMoreComponent implements OnInit {
     rate: null,
     name: null,
   };
+
+  public commentsForm = {
+    name: null,
+    email: null,
+    text: null,
+  };
+
+  commentsError = {
+    name: null,
+    email: null,
+    text: null,
+  };
+
+
   /*when select color
   */
   colorSelect(event) {
@@ -285,6 +300,40 @@ export class ViewMoreComponent implements OnInit {
     );
   }
 
+  /*comments
+  */
+  setComments(){
+    this.call.setComments(this.commentsForm).subscribe(
+      data => this.notify.success(data.message),
+      error => this.errorscomment(error)
+    );
+  }
+
+
+  /*error of comments from api
+  */
+  errorscomment(error){
+    this.commentsError = error.error.errors;
+    this.notify.error(error.error.message);
+  }
+
+  /*get comments
+  */
+  getComments(){
+    this.call.getComments(this.commentsForm).subscribe(
+      data => this.commentsData(data),
+      error => console.log(error)
+    );
+  }
+
+  /*comments from api
+  */
+  commentsData(data){
+    this.commentsData = data;
+    console.log(data);
+
+   console.log(new Date(2011, 0, 1));
+  }
 
   ngOnInit(): void {
     //this.filterPrice();
@@ -294,6 +343,7 @@ export class ViewMoreComponent implements OnInit {
     this.auth.authStatus.subscribe(value => this.loggedIn = value);
     //this.changeUrl();
     this.quantity();
+    this.getComments();
     $.getScript("assets/js/main.js");//import script link in component html
   }
 

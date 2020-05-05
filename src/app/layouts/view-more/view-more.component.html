@@ -101,7 +101,7 @@
                           <li><input type="checkbox" id="cs-{{col}}" value="{{col}}" (change)="colorSelect($event)"></li>
                           <div class="cs-item cm-item">
 
-                        <li><label class="cs-{{col}} m" for="cs-{{col}}"></label></li>
+                            <li><label class="cs-{{col}} m" for="cs-{{col}}"></label></li>
                           </div>
                         </ul>
 
@@ -121,9 +121,9 @@
               </div>
               <div class="quantity">
                 <div class="pro-qty">
-                  <input type="text" value="1" >
+                  <input type="text" value="1">
                 </div>
-                <a [routerLink]="" (click)="putIntoCart(product.name)" class="primary-btn pd-cart" >Add To Cart</a>
+                <a [routerLink]="" (click)="putIntoCart(product.name)" class="primary-btn pd-cart">Add To Cart</a>
 
               </div>
               <ul class="pd-tags">
@@ -151,7 +151,7 @@
                 <a data-toggle="tab" href="#tab-2" role="tab">SPECIFICATIONS</a>
               </li>
               <li>
-                <a data-toggle="tab" href="#tab-3" role="tab">Customer Reviews (02)</a>
+                <a data-toggle="tab" href="#tab-3" role="tab">Customer Reviews ({{commentsData.length}})</a>
               </li>
             </ul>
           </div>
@@ -207,22 +207,15 @@
               </div>
               <div class="tab-pane fade" id="tab-3" role="tabpanel">
                 <div class="customer-review-option">
-                  <h4>2 Comments</h4>
+                  <h4>{{commentsData.length}} Comments</h4>
                   <div class="comment-option">
-                    <div class="co-item">
+                    <div class="co-item" *ngFor="let comments of commentsData">
                       <div class="avatar-pic">
                         <img src="assets/img/product-single/avatar-1.png" alt="">
                       </div>
                       <div class="avatar-text">
-                        <div class="at-rating">
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star-o"></i>
-                        </div>
-                        <h5>Brandon Kelley <span>27 Aug 2019</span></h5>
-                        <div class="at-reply">Nice !</div>
+                        <h5>{{comments.name}} <span>27 Aug 2019</span></h5>
+                        <div class="at-reply">{{comments.text}}</div>
                       </div>
                     </div>
                     <div class="co-item">
@@ -230,19 +223,12 @@
                         <img src="assets/img/product-single/avatar-2.png" alt="">
                       </div>
                       <div class="avatar-text">
-                        <div class="at-rating">
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star-o"></i>
-                        </div>
                         <h5>Roy Banks <span>27 Aug 2019</span></h5>
                         <div class="at-reply">Nice !</div>
                       </div>
                     </div>
                   </div>
-                  <div class="personal-rating">
+                  <!--<div class="personal-rating">
                     <h6>Your Ratind</h6>
                     <div class="rating">
                       <i class="fa fa-star"></i>
@@ -251,20 +237,33 @@
                       <i class="fa fa-star"></i>
                       <i class="fa fa-star-o"></i>
                     </div>
-                  </div>
+                  </div>-->
                   <div class="leave-comment">
                     <h4>Leave A Comment</h4>
-                    <form action="#" class="comment-form">
+                    <!--  error the style in style.css -->
+                    <div class="css-0" [hidden]="!commentsError.name &&!commentsError.email && !commentsError.text">
+                      <div class="css-2viodn">
+                        <div class="css-1j97nb6">
+                          {{commentsError.name}}
+                          <br>
+                          *{{commentsError.email}}
+                          <br>
+                          {{commentsError.text}}
+                        </div>
+                      </div>
+                    </div>
+                    <br>
+                    <form class="comment-form" (submit)="setComments()" #comment=ngForm>
                       <div class="row">
                         <div class="col-lg-6">
-                          <input type="text" placeholder="Name">
+                          <input type="text" name="name" [ngClass]="{ 'is-invalid': commentsError.name || !commentsForm.name }" class="form-control" [(ngModel)]="commentsForm.name" placeholder="Name" required>
                         </div>
                         <div class="col-lg-6">
-                          <input type="text" placeholder="Email">
+                          <input type="email" [ngClass]="{ 'is-invalid': commentsError.email || !commentsForm.email }" name="email" class="form-control" placeholder="E-mail" [(ngModel)]="commentsForm.email" required>
                         </div>
                         <div class="col-lg-12">
-                          <textarea placeholder="Messages"></textarea>
-                          <button type="submit" class="site-btn">Send message</button>
+                          <textarea placeholder="Messages" [ngClass]="{ 'is-invalid': commentsError.text || !commentsForm.text }" name="text" class="form-control" [(ngModel)]="commentsForm.text" maxlength="300" required></textarea>
+                          <button type="submit" class="site-btn" [disabled]="!comment.valid">Send message</button>
                         </div>
                       </div>
                     </form>
