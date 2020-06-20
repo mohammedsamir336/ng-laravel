@@ -148,4 +148,10 @@ export class CallApiService {
         return this.http.post(`${this.url}/getComments`, data);
       }
 
+      /* load more comments button in view
+      */
+       MoreComments(data){
+          return this.http.post(`${this.url}/MoreComments`, data);
+        }
+
 }

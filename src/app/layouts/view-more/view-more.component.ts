@@ -48,6 +48,7 @@ export class ViewMoreComponent implements OnInit {
   selectColor = [];
   selectSize = [];
   cartStatus: boolean;
+  loadMoreCommentStatus: boolean;
 
   public cartForm = {
     name: null,
@@ -66,10 +67,11 @@ export class ViewMoreComponent implements OnInit {
   };
 
   public commentsForm = {
-    productName: null,
-    name: null,
-    email: null,
-    text: null,
+    productName: null,  //productName in function getUrlName
+    name: null, //from input
+    email: null,//from input
+    text: null,//from input
+    skip:null,//from function getMoreComments
   };
 
   commentsError = {
@@ -77,6 +79,7 @@ export class ViewMoreComponent implements OnInit {
     email: null,
     text: null,
   };
+
 
 
   /*when select color
@@ -346,6 +349,27 @@ export class ViewMoreComponent implements OnInit {
 });*/
     //console.log(data);
 
+  }
+
+  /*load more comments
+  */
+  getMoreComments(num) {
+    this.commentsForm.skip = num; //number of this.commentsData.length
+    this.call.MoreComments(this.commentsForm).subscribe(
+      data => this.getMoreCommentsData(data),
+      error => console.log(error)
+    );
+  }
+
+  /* data from load more  comments api
+  */
+  getMoreCommentsData(data) {
+    data.length ? this.loadMoreCommentStatus = true : this.loadMoreCommentStatus = false; //chanage loadmor btn to loadcomplet
+    for (let more of data) {
+      this.commentsData.push(more);
+      //this.cartData = this.arrayData; // show data
+      this.commentsForm.skip = this.commentsData.length; //to send skip number
+    }
   }
 
   ngOnInit(): void {
