@@ -154,4 +154,10 @@ export class CallApiService {
           return this.http.post(`${this.url}/MoreComments`, data);
         }
 
+        /* get category
+        */
+         category(data){
+            return this.http.post(`${this.url}/category`, data);
+          }
+
 }
