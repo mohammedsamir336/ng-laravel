@@ -7,6 +7,8 @@ import { Router, Routes, RouterModule, ActivatedRoute, NavigationEnd } from '@an
 import { AuthService } from '../services/auth.service';
 import { TokenService } from '../services/token.service';
 import { SnotifyService } from 'ng-snotify';
+import { OwlCarousel } from 'ngx-owl-carousel';
+import 'owl.carousel';
 declare var $: any;
 
 @Component({
@@ -24,7 +26,78 @@ export class WomenBannerComponent implements OnInit {
     private auth: AuthService,
     private notify: SnotifyService,
     private token: TokenService,
-  ) { }
+  ) {
+    //for all owlCarousel in website
+    $(document).ready(function() {
+      $(".Autoplay").owlCarousel({
+        loop: true,
+        margin: 20,
+        autoplay: true,
+        autoplayTimeout: 4000,
+        autoplayHoverPause: true
+      });
+
+      setTimeout(function() {
+        $('.mmmm').owlCarousel({
+          loop: true,
+          margin: 20,
+          nav: true,
+          items: 4,
+          smartSpeed: 450,
+          autoplayTimeout: 4000,
+          autoplayHoverPause: true,
+          autoplay: true,
+          dots: false,
+          navigation: true,
+          singleItem: true,
+          /*responsive: {
+            0: {
+              items: 1
+            },
+          /*  600: {
+              items: 2
+            },
+            1000: {
+              items: 4
+            }
+          }*/
+
+        });
+      }, 300);
+      /*$(".owl-carousel").owlCarousel({
+        loop: true,
+    //  margin: 10,
+       //nav: false,
+        //smartSpeed: 450,
+        //animateOut: 'fadeOut',//animate
+      items: 1,
+      //  navigation: true,
+        //singleItem: true,
+      //  nav: true,
+        //margin:30,
+        //slideSpeed: 20,
+        //paginationSpeed: 20,
+      //  autoplay: true,
+      //  autoplayTimeout: 7000,
+      //  autoplayHoverPause: true,
+      //  dots: false,
+        //autoHeight: true,
+        //items: 2,
+      //  stage: 1,
+      //  loop: true,
+
+        //rtl: true,
+        // navText: ['<i class="la la-angle-left" aria-hidden="true"></i>', '<i class="la la-angle-right" aria-hidden="true"></i>'],
+        // "singleItem:true" is a shortcut for:
+        // items : 1,
+        // itemsDesktop : false,
+        // itemsDesktopSmall : false,
+        // itemsTablet: false,
+        // itemsMobile : false
+      });*/
+
+    });
+}
 
 
   public form = {

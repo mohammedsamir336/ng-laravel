@@ -1,14 +1,13 @@
 <!-- Deal Of The Week Section Begin-->
-<section class="deal-of-week set-bg spad" [style.background]="'url(assets/img/time-bg.jpg)'">
+<section class="deal-of-week set-bg spad" [ngStyle]="{'background-image':'url(' + 'assets/img/' + dealData.img1  + ')'}">
   <div class="container">
     <div class="col-lg-6 text-center">
       <div class="section-title">
         <h2>Deal Of The Week</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed<br /> do ipsum dolor sit amet,
-          consectetur adipisicing elit </p>
+        <p>{{trim}} </p>
         <div class="product-price">
-          $35.00
-          <span>/ HanBag</span>
+          ${{dealData.new_price}}
+          <span>/ {{dealData.item}}</span>
         </div>
       </div>
       <div class="countdown-timer" id="countdown">
@@ -16,7 +15,7 @@
         <countdown units="Year | Month | Days | Hours | Minutes | Seconds" end="July 22, 2020" (reached)="someFunction($event)"></countdown>
 
       </div>
-      <a href="#" class="primary-btn">Shop Now</a>
+      <a href="#" [routerLink]="['/view/',dealData.name]" class="primary-btn">Shop Now</a>
     </div>
   </div>
 </section>

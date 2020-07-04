@@ -40,6 +40,9 @@ import { ScrollTopComponent } from './layouts/scroll-top/scroll-top.component';
 import { ForgetPassComponent } from './auth/forget-pass/forget-pass.component';
 import { ResetPassComponent } from './auth/reset-pass/reset-pass.component';
 import { SearchComponent } from './search/search.component';
+import { MenComponent } from './categories/men/men.component';
+import { WomenComponent } from './categories/women/women.component';
+import { KidsComponent } from './categories/kids/kids.component';
 
 
 //ngx-translate
@@ -87,6 +90,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     ForgetPassComponent,
     ResetPassComponent,
     SearchComponent,
+    MenComponent,
+    WomenComponent,
+    KidsComponent,
+
 
 
   ],

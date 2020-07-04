@@ -160,4 +160,11 @@ export class CallApiService {
             return this.http.post(`${this.url}/category`, data);
           }
 
+          /* get DealOfTheWeek product data
+          */
+           DealOfTheWeek(data){
+              return this.http.post(`${this.url}/DealOfTheWeek`, data);
+            }
+
+
 }
