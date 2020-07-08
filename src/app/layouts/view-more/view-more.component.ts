@@ -383,6 +383,8 @@ export class ViewMoreComponent implements OnInit {
    setInterval(() => { //getComments
       this.getComments();
     }, 4000);
+
+
     $.getScript("assets/js/main.js");//import script link in component html
   }
 

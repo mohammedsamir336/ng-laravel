@@ -17,10 +17,10 @@
                         <li class="Women" (click)="getProduct('Women','Accessories')" id="Accessories">Accessories</li>
                     </ul>
                 </div>
-                <div class="product-slider owl-carousel mmmm" >
+                <div class="owlm product-slider owl-carousel" >
                     <div class="product-item" *ngFor="let data of categoryArray">
-                        <div class="pi-pic" [ngStyle]="{'background-image':'url(' + 'assets/img/products/' + data.img1  + ')'}">
-                          <img src="assets/img/products/{{data.img1}}" alt="">
+                        <div class="pi-pic">
+                          <img src="assets/img/products/{{data.img1}}" alt=""  id="wwww">
                             <div class="sale" [hidden]="!data.old_price">Sale</div>
                             <div class="icon">
                                 <i class="icon_heart_alt"></i>

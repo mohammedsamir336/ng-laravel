@@ -29,27 +29,22 @@ export class WomenBannerComponent implements OnInit {
   ) {
     //for all owlCarousel in website
     $(document).ready(function() {
-      $(".Autoplay").owlCarousel({
-        loop: true,
-        margin: 20,
-        autoplay: true,
-        autoplayTimeout: 4000,
-        autoplayHoverPause: true
-      });
-
       setTimeout(function() {
-        $('.mmmm').owlCarousel({
+        $('.owlm').owlCarousel({
           loop: true,
           margin: 20,
-          nav: true,
-          items: 4,
-          smartSpeed: 450,
+          autoplay: true,
           autoplayTimeout: 4000,
           autoplayHoverPause: true,
-          autoplay: true,
-          dots: false,
-          navigation: true,
-          singleItem: true,
+          nav: true,
+          items: 2,
+          //smartSpeed: 450,
+          //autoplayTimeout: 4000,
+          //autoplayHoverPause: true,
+          //autoplay: true,
+          //dots: false,
+          //navigation: true,
+          //singleItem: true,
           /*responsive: {
             0: {
               items: 1
@@ -128,6 +123,7 @@ export class WomenBannerComponent implements OnInit {
 
   ngOnInit(): void {
    this.getProduct('Women','Clothing');
+   //$.getScript("assets/js/main.js");
 
   }
 
